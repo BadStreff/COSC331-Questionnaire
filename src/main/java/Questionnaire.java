@@ -5,6 +5,16 @@
 
 import static spark.Spark.*;
 
+/**
+ *  Velocity imports
+ */
+import java.util.HashMap;
+import java.util.Map;
+
+import spark.Request;
+import spark.Response;
+import spark.template.velocity.VelocityTemplateEngine;
+
 public class Questionnaire {
     public static void main(String[] args) {
         port(80);
@@ -13,7 +23,12 @@ public class Questionnaire {
 
         staticFileLocation("/public"); // Static files
 
-        // Each request spawns a thread to handle it.
-        get("/hello", (req, res) -> "Hello World");
+        get("/", (request, response) -> {
+            Map<String, Object> model = new HashMap<>();
+            model.put("message", "This is where the survey index page will be generated");
+
+            // The wm files are located under the resources directory
+            return new spark.ModelAndView(model, "/public/index.vm");
+        }, new VelocityTemplateEngine());
     }
 }
