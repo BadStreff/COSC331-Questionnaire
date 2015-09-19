@@ -14,6 +14,7 @@ TODO: Copy over from proposal.
 ## Build Instructions
 
 Launch IntelliJ CE 14.1.x
+
 File > New > Project from Version > Control > GitHub
 
 GitHub Repo URL: https://github.com/BadStreff/COSC3318-Questionnaire
