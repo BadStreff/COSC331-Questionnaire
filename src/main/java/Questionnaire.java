@@ -11,8 +11,9 @@ public class Questionnaire {
         int maxThreads = 8;
         threadPool(maxThreads);
 
+        staticFileLocation("/public"); // Static files
+
         // Each request spawns a thread to handle it.
         get("/hello", (req, res) -> "Hello World");
-        return;
     }
 }
