@@ -39,4 +39,4 @@ Corey Parker
 
 ## License
 
-TODO: GNU-GPLv3
+GNU-GPLv3
