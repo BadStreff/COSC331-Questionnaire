@@ -21,9 +21,12 @@ TODO: Provide instructions for running test. Build tests.
 
 ## Contributors
 
-Adam Furbee
+[Adam Furbee](https://www.github.com/BadStreff)
+
 Thamer Al-Husain
+
 Joshua Aguire
+
 Corey Parker
 
 ## License
