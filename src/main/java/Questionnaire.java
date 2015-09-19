@@ -1,13 +1,22 @@
-/**
- * Created by Adam Furbee on 9/19/2015.
- * This will be the main request handler for the project.
+/*
+ * This file is part of COSC3318-Questionnaire.
+ *
+ *     COSC3318-Questionnaire is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     COSC3318-Questionnaire is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ *     You should have received a copy of the GNU General Public License
+ *     along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 import static spark.Spark.*;
 
-/**
- *  Velocity imports
- */
 import java.util.HashMap;
 import java.util.Map;
 
