@@ -17,20 +17,26 @@
 
 import static spark.Spark.*;
 
+// Used for velocity templates.
 import java.util.HashMap;
 import java.util.Map;
-
-import spark.Request;
-import spark.Response;
 import spark.template.velocity.VelocityTemplateEngine;
+
+
+import db.Database;
 
 public class Questionnaire {
     public static void main(String[] args) {
+        //TODO: Initialize Database
+        Database db = new Database();
+
+        // Initialize Web Server
         port(80);
         int maxThreads = 8;
         threadPool(maxThreads);
 
-        staticFileLocation("/public"); // Static files
+        //Initialize static file directory.
+        staticFileLocation("/public");
 
         get("/", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
