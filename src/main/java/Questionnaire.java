@@ -45,5 +45,14 @@ public class Questionnaire {
             // The wm files are located under the resources directory
             return new spark.ModelAndView(model, "/public/index.vm");
         }, new VelocityTemplateEngine());
+
+        get("/survey/:id", (request, response) -> {
+            Map<String, Object> model = new HashMap<>();
+            model.put("message", "You are taking survey ");
+            model.put("id", request.params(":id"));
+
+            // The wm files are located under the resources directory
+            return new spark.ModelAndView(model, "/public/survey.vm");
+        }, new VelocityTemplateEngine());
     }
 }
