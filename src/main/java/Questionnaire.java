@@ -31,7 +31,7 @@ public class Questionnaire {
         Database db = new Database();
 
         // Initialize Web Server
-        port(80);
+        port(4567);
         int maxThreads = 8;
         threadPool(maxThreads);
 
