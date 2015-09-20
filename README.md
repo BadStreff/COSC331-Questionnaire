@@ -35,7 +35,7 @@ Thamer Al-Husain
 
 Joshua Aguire
 
-Corey Parker
+[Corey Parker](https://github.com/corey9752)
 
 ## License
 
