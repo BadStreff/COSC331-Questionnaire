@@ -33,7 +33,7 @@ TODO: Provide instructions for running test. Build tests.
 
 Thamer Al-Husain
 
-Joshua Aguire
+[Joshua Aguire](https://github.com/JaBase)
 
 [Corey Parker](https://github.com/corey9752)
 
