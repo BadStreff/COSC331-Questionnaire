@@ -43,7 +43,7 @@ public class Questionnaire {
             model.put("message", "This is where the survey index page will be generated");
 
             // The wm files are located under the resources directory
-            return new spark.ModelAndView(model, "/public/index.vm");
+            return new spark.ModelAndView(model, "/private/index.html");
         }, new VelocityTemplateEngine());
 
         get("/survey/:id", (request, response) -> {
@@ -52,7 +52,7 @@ public class Questionnaire {
             model.put("id", request.params(":id"));
 
             // The wm files are located under the resources directory
-            return new spark.ModelAndView(model, "/public/survey.vm");
+            return new spark.ModelAndView(model, "/private/survey.html");
         }, new VelocityTemplateEngine());
     }
 }
