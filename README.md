@@ -1,6 +1,6 @@
 ## Synopsis
 
-This is a simple survey building web app for internal uses. It is based on the [Spark 2.3](http://sparkjava.com/) web framework using the [Velocity](http://velocity.apache.org/) template engine for the backend. The project is meant to be built with the IntelliJ IDE CE 14.1 and utilizes the maven framework for resolving dependencies.
+This is a simple survey building web app for internal uses. It is based on the [Spark 2.3](http://sparkjava.com/) web framework using the [Velocity](http://velocity.apache.org/) template engine for the backend. The project is meant to be built with the [IntelliJ IDE CE 14.1](https://www.jetbrains.com/idea/download/) and utilizes the maven framework for resolving dependencies.
 
 ## Motivation
 
