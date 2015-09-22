@@ -31,7 +31,7 @@ TODO: Provide instructions for running test. Build tests.
 
 [Adam Furbee](https://www.github.com/BadStreff)
 
-Thamer Al-Husain
+[Thamer Al-Husain](https://www.github.com/talhusain)
 
 [Joshua Aguire](https://github.com/JaBase)
 
