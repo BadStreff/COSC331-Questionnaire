@@ -42,6 +42,8 @@ public class Questionnaire {
             Map<String, Object> model = new HashMap<>();
             model.put("message", "This is where the survey index page will be generated");
 
+            System.out.println("Serving / to " + request.ip());
+
             // The wm files are located under the resources directory
             return new spark.ModelAndView(model, "/private/index.html");
         }, new VelocityTemplateEngine());
@@ -50,6 +52,8 @@ public class Questionnaire {
             Map<String, Object> model = new HashMap<>();
             model.put("message", "You are taking survey ");
             model.put("id", request.params(":id"));
+
+            System.out.println("Serving /survey/" + request.params(":id") + " to " + request.ip());
 
             // The wm files are located under the resources directory
             return new spark.ModelAndView(model, "/private/survey.html");
