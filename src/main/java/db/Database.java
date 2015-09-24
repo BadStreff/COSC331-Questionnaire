@@ -20,14 +20,49 @@
  * This package will be used to interface with the Questionnaire database.
  */
 
+/*
+ * The purpose of this class is for initialization of the database.
+ * As well as interfacing with the database.
+ */
+
 package db;
 
+import db.Survey;
 
 public class Database {
-    public Database(){
-        /*
-        Create the database if it is not already created.
-        Do a checksum on the database if it already exist.
-         */
+    private final String DB_NAME = "";
+
+    /**===============================================
+     *  Constructor / Destructor
+     ===============================================*/
+    public Database() {
+        if(!this.exists()) {
+            createDatabaseFile(DB_NAME);
+            createTables();
+        }
+    }
+
+    /**===============================================
+     *  Public Members
+     ===============================================*/
+    public void createSurvey(Survey s) {
+
+    }
+    public void deleteSurvey(Survey s) {
+
+    }
+
+    /**===============================================
+     *  Private Members
+     ===============================================*/
+    private void createDatabaseFile(String dbName) {
+        //Create initial file
+    }
+    private void createTables() {
+        //Construct our tables
+    }
+    //Check if the database already exist or not
+    private boolean exists() {
+        return false;
     }
 }
