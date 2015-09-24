@@ -36,6 +36,7 @@ public class Database {
      *  Constructor / Destructor
      ===============================================*/
     public Database() {
+        //TODO
         if(!this.exists()) {
             createDatabaseFile(DB_NAME);
             createTables();
@@ -46,23 +47,30 @@ public class Database {
      *  Public Members
      ===============================================*/
     public void createSurvey(Survey s) {
-
+        //TODO
     }
     public void deleteSurvey(Survey s) {
-
+        //TODO
+    }
+    public void addAnswer(){
+        //TODO
+    }
+    public void addUser() {
+        //TODO
     }
 
     /**===============================================
      *  Private Members
      ===============================================*/
     private void createDatabaseFile(String dbName) {
-        //Create initial file
+        //TODO
     }
     private void createTables() {
-        //Construct our tables
+        //TODO
     }
     //Check if the database already exist or not
     private boolean exists() {
+        //TODO
         return false;
     }
 }

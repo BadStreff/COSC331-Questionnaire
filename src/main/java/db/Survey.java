@@ -24,4 +24,5 @@ package db;
  * for processing.
  */
 public class Survey {
+    //TODO
 }
