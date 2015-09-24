@@ -22,10 +22,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
+        <module name="COSC3318-Questionnaire" />
         <module name="Questionnaire" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="COSC3318-Questionnaire" target="1.8" />
       <module name="Questionnaire" target="1.8" />
     </bytecodeTargetLevel>
   </component>
