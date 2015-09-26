@@ -31,6 +31,11 @@ public class Survey {
     final String name;
     final Question[] question;
 
+    public Survey() {
+        this.name = "";
+        this.question = new Question[0];
+    }
+
     public Survey(String name, Question[] question) {
         this.name = name;
         this.question = question;

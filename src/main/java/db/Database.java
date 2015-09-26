@@ -28,6 +28,7 @@
 package db;
 
 import db.Survey;
+import db.Question;
 
 public class Database {
     private final String DB_NAME = "";
@@ -49,14 +50,16 @@ public class Database {
     public void addSurvey(Survey s) {
         //TODO
     }
-    public void deleteSurvey(Survey s) {
+    public void deleteSurvey(int sid) {
         //TODO
     }
-    public void addAnswer(){
+    public Survey[] getSurveys(){
         //TODO
+        return new Survey[0];
     }
-    public void addUser() {
+    public Survey getSurvey(int sid){
         //TODO
+        return new Survey();
     }
 
     /**===============================================

@@ -28,6 +28,12 @@ public class Question {
     final String[] choice;
     final int type;
 
+    public Question() {
+        this.question = "";
+        this.choice = new String[0];
+        this.type = 0;
+    }
+
     public Question(String question, String[] choice, int type) {
         this.question = question;
         this.choice = choice;
