@@ -27,7 +27,6 @@ import db.Database;
 
 public class Questionnaire {
     public static void main(String[] args) {
-        //TODO: Initialize Database
         Database db = new Database();
 
         // Initialize Web Server
