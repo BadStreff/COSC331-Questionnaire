@@ -27,6 +27,8 @@
 
 package db;
 
+import java.io.File;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -42,16 +44,20 @@ public class Database {
     /**===============================================
      *  Constructor / Destructor
      ===============================================*/
-    public Database() {
+    public Database(){
         //TODO
         if(!this.exists()) {
+            System.out.println("No database detected, creating a new one");
             try {
                 createDatabaseFile(DB_NAME);
                 createTables();
             }
             catch (Exception e) {
-                System.err.println(e.getMessage());
+                System.out.println(e.getMessage());
             }
+        }
+        else {
+            System.out.println("Database Detected. Verifying Database Integrity...");
         }
     }
 
@@ -80,14 +86,14 @@ public class Database {
         Class.forName("org.sqlite.JDBC");
         Connection connection = null;
         try {
-            // create a database connection
+            // create a database connection, this will also create the database
             connection = DriverManager.getConnection("jdbc:sqlite:" + dbName);
         }
         catch(SQLException e) {
             // if the error message is "out of memory",
             // it probably means no database file is found
             // or you do not have write access to create one
-            System.err.println(e.getMessage());
+            System.out.println(e.getMessage());
         }
         finally {
             try {
@@ -96,16 +102,45 @@ public class Database {
             }
             catch(SQLException e) {
                 // connection close failed.
-                System.err.println(e);
+                System.out.println(e);
             }
         }
     }
     private void createTables() {
-        //TODO
+        Connection connection = null;
+        try {
+            connection = DriverManager.getConnection("jdbc:sqlite:" + DB_NAME);
+            Statement stmt = connection.createStatement();
+            stmt.execute("CREATE TABLE Users(uid INTEGER PRIMARY KEY ASC, " +
+                            "username STRING, " +
+                            "email STRING, " +
+                            "password STRING, " +
+                            "type INTEGER);");
+            stmt.execute("CREATE TABLE Surveys(sid INTEGER PRIMARY KEY ASC, " +
+                            "name STRING, " +
+                            "creation_timestamp TIMESTAMP, " +
+                            "publish_timestamp TIMESTAMP);");
+            stmt.execute("CREATE TABLE Questions(qid INTEGER PRIMARY KEY ASC, " +
+                            "sid INTEGER" +
+                            "type INTEGER," +
+                            "choices STRING," +
+                            "FOREIGN KEY(sid) REFERENCES Surveys(sid));");
+        }
+        catch (SQLException e) {
+            System.out.println(e);
+        }
+        finally {
+            try {
+                if(connection != null)
+                    connection.close();
+            }
+            catch(SQLException e) {
+                System.out.println(e);
+            }
+        }
     }
     //Check if the database already exist or not
     private boolean exists() {
-        //TODO
-        return false;
+        return new File(DB_NAME).isFile();
     }
 }
