@@ -46,7 +46,7 @@ public class Database {
     /**===============================================
      *  Public Members
      ===============================================*/
-    public void createSurvey(Survey s) {
+    public void addSurvey(Survey s) {
         //TODO
     }
     public void deleteSurvey(Survey s) {
