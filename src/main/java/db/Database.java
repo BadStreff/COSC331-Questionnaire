@@ -78,6 +78,13 @@ public class Database {
         //TODO
         return new Survey();
     }
+    public void submitSurvey() {
+        //TODO
+    }
+    public boolean authenticateUser(String name, String password) {
+        //TODO
+        return false;
+    }
 
     /**===============================================
      *  Private Members
@@ -111,6 +118,7 @@ public class Database {
         try {
             connection = DriverManager.getConnection("jdbc:sqlite:" + DB_NAME);
             Statement stmt = connection.createStatement();
+            stmt.execute("PRAGMA foreign_keys = ON;");
             stmt.execute("CREATE TABLE Users(uid INTEGER PRIMARY KEY ASC, " +
                             "username STRING, " +
                             "email STRING, " +
@@ -125,6 +133,15 @@ public class Database {
                             "type INTEGER," +
                             "choices STRING," +
                             "FOREIGN KEY(sid) REFERENCES Surveys(sid));");
+            stmt.execute("CREATE TABLE Answers(aid INTEGER PRIMARY KEY ASC, " +
+                            "uid INTEGER" +
+                            "qid INTEGER," +
+                            "answer STRING," +
+                            "FOREIGN KEY(uid) REFERENCES Users(uid)," +
+                            "FOREIGN KEY(qid) REFERENCES Questions(qid));");
+            stmt.execute("CREATE TABLE Completed(sid INTEGER, " +
+                            "uid INTEGER" +
+                            "date_complete TIMESTAMP);");
         }
         catch (SQLException e) {
             System.out.println(e);
@@ -138,6 +155,10 @@ public class Database {
                 System.out.println(e);
             }
         }
+    }
+    private String hashPassword(String password) {
+        //TODO
+        return "";
     }
     //Check if the database already exist or not
     private boolean exists() {
