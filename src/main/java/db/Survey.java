@@ -17,12 +17,22 @@
 
 package db;
 
+import db.Question;
+
 /**
  * This is our survey objects for handling surveys.
  * Note that this object by itself will not interface
  * with the Database class, but will be passed to it
  * for processing.
+ *
+ * You can think of surveys as having a name, and a collection of questions.
  */
 public class Survey {
-    //TODO
+    final String name;
+    final Question[] question;
+
+    public Survey(String name, Question[] question) {
+        this.name = name;
+        this.question = question;
+    }
 }
