@@ -7,6 +7,9 @@
 target/
 # if you remove the above rule, at least ignore the following:
 
+## Do not upload database
+*.db
+
 # User-specific stuff:
 # .idea/workspace.xml
 # .idea/tasks.xml
