@@ -27,11 +27,17 @@
 
 package db;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 import db.Survey;
 import db.Question;
 
 public class Database {
-    private final String DB_NAME = "";
+    private final String DB_NAME = "Questionnaire.db";
 
     /**===============================================
      *  Constructor / Destructor
@@ -39,8 +45,13 @@ public class Database {
     public Database() {
         //TODO
         if(!this.exists()) {
-            createDatabaseFile(DB_NAME);
-            createTables();
+            try {
+                createDatabaseFile(DB_NAME);
+                createTables();
+            }
+            catch (Exception e) {
+                System.err.println(e.getMessage());
+            }
         }
     }
 
@@ -65,8 +76,29 @@ public class Database {
     /**===============================================
      *  Private Members
      ===============================================*/
-    private void createDatabaseFile(String dbName) {
-        //TODO
+    private void createDatabaseFile(String dbName) throws ClassNotFoundException {
+        Class.forName("org.sqlite.JDBC");
+        Connection connection = null;
+        try {
+            // create a database connection
+            connection = DriverManager.getConnection("jdbc:sqlite:" + dbName);
+        }
+        catch(SQLException e) {
+            // if the error message is "out of memory",
+            // it probably means no database file is found
+            // or you do not have write access to create one
+            System.err.println(e.getMessage());
+        }
+        finally {
+            try {
+                if(connection != null)
+                    connection.close();
+            }
+            catch(SQLException e) {
+                // connection close failed.
+                System.err.println(e);
+            }
+        }
     }
     private void createTables() {
         //TODO
