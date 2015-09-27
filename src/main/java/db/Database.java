@@ -29,6 +29,9 @@ package db;
 
 import java.io.File;
 
+import java.security.MessageDigest;
+
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -45,7 +48,6 @@ public class Database {
      *  Constructor / Destructor
      ===============================================*/
     public Database(){
-        //TODO
         if(!this.exists()) {
             System.err.println("No database detected, creating a new one");
             try {
@@ -58,6 +60,7 @@ public class Database {
         }
         else {
             System.out.println("Database Detected. Verifying Database Integrity...");
+            //TODO
         }
     }
 
@@ -157,8 +160,26 @@ public class Database {
         }
     }
     private String hashPassword(String password) {
-        //TODO
-        return "";
+        MessageDigest md;
+        try {
+            md = MessageDigest.getInstance("SHA-256");
+        }
+        catch (NoSuchAlgorithmException e) {
+            System.err.print("Unable to hash passwords, storing in plain text");
+            return password;
+        }
+        md.update(password.getBytes());
+
+        byte byteData[] = md.digest();
+
+        //convert the byte to hex format method 1
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < byteData.length; i++) {
+            sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
+        }
+
+        System.out.println("Hex format : " + sb.toString());
+        return sb.toString();
     }
     //Check if the database already exist or not
     private boolean exists() {
