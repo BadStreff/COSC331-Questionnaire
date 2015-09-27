@@ -119,28 +119,28 @@ public class Database {
             connection = DriverManager.getConnection("jdbc:sqlite:" + DB_NAME);
             Statement stmt = connection.createStatement();
             stmt.execute("PRAGMA foreign_keys = ON;");
-            stmt.execute("CREATE TABLE Users(uid INTEGER PRIMARY KEY ASC, " +
+            stmt.execute("CREATE TABLE Users(uid INTEGER PRIMARY KEY, " +
                             "username STRING, " +
                             "email STRING, " +
                             "password STRING, " +
                             "type INTEGER);");
-            stmt.execute("CREATE TABLE Surveys(sid INTEGER PRIMARY KEY ASC, " +
+            stmt.execute("CREATE TABLE Surveys(sid INTEGER PRIMARY KEY, " +
                             "name STRING, " +
                             "creation_timestamp TIMESTAMP, " +
                             "publish_timestamp TIMESTAMP);");
-            stmt.execute("CREATE TABLE Questions(qid INTEGER PRIMARY KEY ASC, " +
-                            "sid INTEGER" +
+            stmt.execute("CREATE TABLE Questions(qid INTEGER PRIMARY KEY, " +
+                            "sid INTEGER," +
                             "type INTEGER," +
                             "choices STRING," +
                             "FOREIGN KEY(sid) REFERENCES Surveys(sid));");
             stmt.execute("CREATE TABLE Answers(aid INTEGER PRIMARY KEY ASC, " +
-                            "uid INTEGER" +
+                            "uid INTEGER," +
                             "qid INTEGER," +
                             "answer STRING," +
-                            "FOREIGN KEY(uid) REFERENCES Users(uid)," +
-                            "FOREIGN KEY(qid) REFERENCES Questions(qid));");
+                            "FOREIGN KEY(uid) REFERENCES Users," +
+                            "FOREIGN KEY(qid) REFERENCES Questions);");
             stmt.execute("CREATE TABLE Completed(sid INTEGER, " +
-                            "uid INTEGER" +
+                            "uid INTEGER," +
                             "date_complete TIMESTAMP);");
         }
         catch (SQLException e) {
