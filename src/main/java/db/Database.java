@@ -46,7 +46,7 @@ public class Database {
 
     /**===============================================
      *  Constructor / Destructor
-     ===============================================*/
+     *==============================================*/
     public Database(){
         if(!this.exists()) {
             System.err.println("No database detected, creating a new one");
@@ -66,7 +66,7 @@ public class Database {
 
     /**===============================================
      *  Public Members
-     ===============================================*/
+     *==============================================*/
     public void addSurvey(Survey s) {
         //TODO
     }
@@ -81,17 +81,22 @@ public class Database {
         //TODO
         return new Survey();
     }
-    public void submitSurvey() {
+
+    public void submitSurveyAnswers() {
         //TODO
     }
+
     public boolean authenticateUser(String name, String password) {
         //TODO
         return false;
     }
+    public void createUser(String name, String password, String email) {
+        //TODO
+    }
 
     /**===============================================
      *  Private Members
-     ===============================================*/
+     *==============================================*/
     private void createDatabaseFile(String dbName) throws ClassNotFoundException {
         Class.forName("org.sqlite.JDBC");
         Connection connection = null;

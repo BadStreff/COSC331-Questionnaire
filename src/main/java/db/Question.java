@@ -23,18 +23,23 @@ package db;
  * Type will be an enum most likely in the format TRUEFALSE,MULTIPLECHOICE,MULTIPLECHECK,OPEN
  * or something of that nature for velocity to parse it correctly.
  */
+
 public class Question {
     final String question;
     final String[] choice;
-    final int type;
+    final QType type;
+
+    public enum QType {
+        TRUE_FALSE, MULTIPLE_CHOICE, MULTIPLE_SELECT, OPEN
+    }
 
     public Question() {
         this.question = "";
         this.choice = new String[0];
-        this.type = 0;
+        this.type = QType.OPEN;
     }
 
-    public Question(String question, String[] choice, int type) {
+    public Question(String question, String[] choice, QType type) {
         this.question = question;
         this.choice = choice;
         this.type = type;
