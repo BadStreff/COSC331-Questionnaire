@@ -47,13 +47,13 @@ public class Database {
     public Database(){
         //TODO
         if(!this.exists()) {
-            System.out.println("No database detected, creating a new one");
+            System.err.println("No database detected, creating a new one");
             try {
                 createDatabaseFile(DB_NAME);
                 createTables();
             }
             catch (Exception e) {
-                System.out.println(e.getMessage());
+                System.err.println(e.getMessage());
             }
         }
         else {
@@ -100,7 +100,7 @@ public class Database {
             // if the error message is "out of memory",
             // it probably means no database file is found
             // or you do not have write access to create one
-            System.out.println(e.getMessage());
+            System.err.println(e.getMessage());
         }
         finally {
             try {
@@ -109,7 +109,7 @@ public class Database {
             }
             catch(SQLException e) {
                 // connection close failed.
-                System.out.println(e);
+                System.err.println(e);
             }
         }
     }
@@ -144,7 +144,7 @@ public class Database {
                             "date_complete TIMESTAMP);");
         }
         catch (SQLException e) {
-            System.out.println(e);
+            System.err.println(e);
         }
         finally {
             try {
@@ -152,7 +152,7 @@ public class Database {
                     connection.close();
             }
             catch(SQLException e) {
-                System.out.println(e);
+                System.err.println(e);
             }
         }
     }
