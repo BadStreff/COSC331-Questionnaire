@@ -134,6 +134,7 @@ public class Database {
                             "type INTEGER);");
             stmt.execute("CREATE TABLE Surveys(sid INTEGER PRIMARY KEY, " +
                             "name STRING, " +
+                            "about STRING, " +
                             "creation_timestamp TIMESTAMP, " +
                             "publish_timestamp TIMESTAMP);");
             stmt.execute("CREATE TABLE Questions(qid INTEGER PRIMARY KEY, " +

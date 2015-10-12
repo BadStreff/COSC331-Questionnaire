@@ -29,15 +29,18 @@ import db.Question;
  */
 public class Survey {
     final String name;
+    final String about;
     final Question[] question;
 
     public Survey() {
         this.name = "";
+        this.about = "";
         this.question = new Question[0];
     }
 
-    public Survey(String name, Question[] question) {
+    public Survey(String name, String about, Question[] question) {
         this.name = name;
+        this.about = about;
         this.question = question;
     }
 }

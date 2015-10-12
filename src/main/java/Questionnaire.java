@@ -39,7 +39,7 @@ public class Questionnaire {
 
         get("/", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
-            model.put("message", "This is where the survey index page will be generated");
+            model.put("message", "Please take the time to complete any surveys you have in your queue.");
 
             System.out.println("Serving / to " + request.ip());
 
