@@ -43,4 +43,9 @@ public class Survey {
         this.about = about;
         this.question = question;
     }
+
+    //Public getters are needed for the velocity engine
+    public String getName() { return this.name; }
+    public String getAbout() { return this.name; }
+    public Question[] getQuestion() { return this.question; }
 }

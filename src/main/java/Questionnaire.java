@@ -24,6 +24,8 @@ import spark.template.velocity.VelocityTemplateEngine;
 
 
 import db.Database;
+import db.Survey;
+import db.Question;
 
 public class Questionnaire {
     public static void main(String[] args) {
