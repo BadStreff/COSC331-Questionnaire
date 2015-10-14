@@ -49,6 +49,24 @@ public class Questionnaire {
             return new spark.ModelAndView(model, "/private/index.html");
         }, new VelocityTemplateEngine());
 
+        get("/login", (request, response) -> {
+            Map<String, Object> model = new HashMap<>();
+
+            System.out.println("Serving /login to " + request.ip());
+
+            // The wm files are located under the resources directory
+            return new spark.ModelAndView(model, "/private/login.html");
+        }, new VelocityTemplateEngine());
+
+        get("/sign_up", (request, response) -> {
+            Map<String, Object> model = new HashMap<>();
+
+            System.out.println("Serving /sign_up to " + request.ip());
+
+            // The wm files are located under the resources directory
+            return new spark.ModelAndView(model, "/private/signup.html");
+        }, new VelocityTemplateEngine());
+
         get("/survey/:id", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
             model.put("message", "You are taking survey ");
