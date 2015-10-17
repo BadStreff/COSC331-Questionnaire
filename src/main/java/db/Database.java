@@ -101,7 +101,7 @@ public class Database {
             statement.setQueryTimeout(30);  // set timeout to 30 sec.
 
             statement.executeUpdate("insert into Users values(" + user.uId + ",\"" + user.userName + "\",\""
-                    + user.email + "\",\"" + user.password + "\"," + 0 + ")");
+                    + user.email + "\",\"" + user.password + "\"," + user.type.getValue() + ")");
         }
         catch(SQLException e) {
             // if the error message is "out of memory",
@@ -219,7 +219,7 @@ public class Database {
     }
 
     private void testInsertUser(){
-        User awesomeDatabase = new User("fasfa", "jjfhd@yasdfjh.com", "password", User.Type.REGULAR, 0 );
+        User awesomeDatabase = new User("fasfa", "jjfhd@yasdfjh.com", "password", User.Type.ADMIN, 999 );
        try {
            insertUser(awesomeDatabase);
        }

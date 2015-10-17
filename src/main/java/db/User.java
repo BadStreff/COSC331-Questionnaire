@@ -9,8 +9,12 @@ import java.security.NoSuchAlgorithmException;
 public class User {
 
     public enum Type {
-        ADMIN, REGULAR
+        ADMIN(0), REGULAR(1);
+        private final int value;
+        Type(int value) {this.value = value;}
+        public int getValue() {return value;}
     }
+
 
     final String userName;
     final String email;
