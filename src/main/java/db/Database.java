@@ -60,6 +60,7 @@ public class Database {
         }
         else {
             System.out.println("Database Detected. Verifying Database Integrity...");
+            testInsertUser();
             //TODO
         }
     }
@@ -90,8 +91,32 @@ public class Database {
         //TODO
         return false;
     }
-    public void createUser(String name, String password, String email) {
-        //TODO
+    public void insertUser(User user) {
+        Connection connection = null;
+        try {
+            // create a database connection
+            connection = DriverManager.getConnection("jdbc:sqlite:" + DB_NAME);
+            Statement statement = connection.createStatement();
+            statement.setQueryTimeout(30);  // set timeout to 30 sec.
+
+            statement.executeUpdate("insert into Users values(" + user.uId + "," + user.userName +  ","
+                    + user.email + "," + user.password + "," + user.type + ")");
+        }
+        catch(SQLException e) {
+            // if the error message is "out of memory",
+            // it probably means no database file is found
+            System.err.println(e.getMessage());
+        }
+        finally {
+            try {
+                if(connection != null)
+                    connection.close();
+            }
+            catch(SQLException e) {
+                // connection close failed.
+                System.err.println(e);
+            }
+        }
     }
 
     /**===============================================
@@ -190,5 +215,10 @@ public class Database {
     //Check if the database already exist or not
     private boolean exists() {
         return new File(DB_NAME).isFile();
+    }
+
+    private void testInsertUser(){
+        User awesomeDatabase = new User("fasfa", "jjfhd@yasdfjh.com", "password", User.Type.REGULAR, 0 );
+        insertUser(awesomeDatabase);
     }
 }
