@@ -91,7 +91,8 @@ public class Database {
         //TODO
         return false;
     }
-    public void insertUser(User user) {
+    public void insertUser(User user) throws ClassNotFoundException  {
+        Class.forName("org.sqlite.JDBC");
         Connection connection = null;
         try {
             // create a database connection
@@ -99,8 +100,8 @@ public class Database {
             Statement statement = connection.createStatement();
             statement.setQueryTimeout(30);  // set timeout to 30 sec.
 
-            statement.executeUpdate("insert into Users values(" + user.uId + "," + user.userName +  ","
-                    + user.email + "," + user.password + "," + user.type + ")");
+            statement.executeUpdate("insert into Users values(" + user.uId + ",\"" + user.userName + "\",\""
+                    + user.email + "\",\"" + user.password + "\"," + 0 + ")");
         }
         catch(SQLException e) {
             // if the error message is "out of memory",
@@ -219,6 +220,11 @@ public class Database {
 
     private void testInsertUser(){
         User awesomeDatabase = new User("fasfa", "jjfhd@yasdfjh.com", "password", User.Type.REGULAR, 0 );
-        insertUser(awesomeDatabase);
+       try {
+           insertUser(awesomeDatabase);
+       }
+       catch (ClassNotFoundException e){
+           System.err.println("SQLIte driver not found");
+       }
     }
 }
