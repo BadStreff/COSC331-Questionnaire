@@ -39,11 +39,15 @@ public class Questionnaire {
         //Initialize static file directory.
         staticFileLocation("/public");
 
+        //Before filter to handle authentications.
+        before((request, response) -> {
+            String path = request.pathInfo();
+            System.out.println("Serving " + path + " to " + request.ip());
+        });
+
         get("/", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
             model.put("message", "Please take the time to complete any surveys you have in your queue.");
-
-            System.out.println("Serving / to " + request.ip());
 
             // The wm files are located under the resources directory
             return new spark.ModelAndView(model, "/private/index.html");
@@ -52,30 +56,27 @@ public class Questionnaire {
         get("/login", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
 
-            System.out.println("Serving /login to " + request.ip());
-
             // The wm files are located under the resources directory
             return new spark.ModelAndView(model, "/private/login.html");
         }, new VelocityTemplateEngine());
+        post("/login", (request, response) -> {
+            System.out.println("Username posted: " + request.queryParams("username"));
+            System.out.println("Password posted: " + request.queryParams("password"));
+
+            //try createusersession
+            //  issue a cookie with uid
+            //catch
+            //  redirect to login page with err message
+
+            return 0;
+        });
+
 
         get("/sign_up", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
 
-            System.out.println("Serving /sign_up to " + request.ip());
-
             // The wm files are located under the resources directory
             return new spark.ModelAndView(model, "/private/signup.html");
-        }, new VelocityTemplateEngine());
-
-        get("/survey/:id", (request, response) -> {
-            Map<String, Object> model = new HashMap<>();
-            model.put("message", "You are taking survey ");
-            model.put("id", request.params(":id"));
-
-            System.out.println("Serving /survey/" + request.params(":id") + " to " + request.ip());
-
-            // The wm files are located under the resources directory
-            return new spark.ModelAndView(model, "/private/survey.html");
         }, new VelocityTemplateEngine());
     }
 }
