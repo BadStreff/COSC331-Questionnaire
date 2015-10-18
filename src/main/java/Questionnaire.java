@@ -43,6 +43,17 @@ public class Questionnaire {
         before((request, response) -> {
             String path = request.pathInfo();
             System.out.println("Serving " + path + " to " + request.ip());
+
+            //if(request.cookie("uid") != null)
+            //    System.out.println("Got uid cookie: " + request.cookie("uid"));
+
+            //Redirect users that are not logged in to the login page
+            if(request.cookie("uid") == null && !(path.contains("bootstrap/") ||
+                    path.contains("/login")  ||
+                    path.contains("js/")     ||
+                    path.contains("css/"))) {
+                response.redirect("/login");
+            }
         });
 
         get("/", (request, response) -> {
@@ -55,6 +66,7 @@ public class Questionnaire {
 
         get("/login", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
+            model.put("message", "Please login before accessing the site.");
 
             // The wm files are located under the resources directory
             return new spark.ModelAndView(model, "/private/login.html");
@@ -62,6 +74,8 @@ public class Questionnaire {
         post("/login", (request, response) -> {
             System.out.println("Username posted: " + request.queryParams("username"));
             System.out.println("Password posted: " + request.queryParams("password"));
+
+            //response.cookie("uid", "uid", 3600);
 
             //try createusersession
             //  issue a cookie with uid
