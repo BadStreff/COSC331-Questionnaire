@@ -87,7 +87,11 @@ public class Database {
         //TODO
     }
 
-    public boolean authenticateUser(String name, String password) {
+    public int createUserSession(String name, String password) throws Exception {
+        //TODO
+        return 0;//returns the uid of the user or throws an exception if no user found
+    }
+    public boolean isAdmin(int uId) {
         //TODO
         return false;
     }
