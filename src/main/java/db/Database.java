@@ -101,7 +101,7 @@ public class Database {
             // create a database connection
             connection = DriverManager.getConnection("jdbc:sqlite:" + DB_NAME);
             Statement statement = connection.createStatement();
-            statement.setQueryTimeout(30);  // set timeout to 30 sec.
+            statement.setQueryTimeout(10);  // set timeout to 10 sec.
 
             statement.executeUpdate("insert into Users values(" + user.uId + ",\"" + user.userName + "\",\""
                     + user.email + "\",\"" + user.password + "\"," + user.type.getValue() + ")");
