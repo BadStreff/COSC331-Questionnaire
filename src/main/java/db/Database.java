@@ -223,7 +223,7 @@ public class Database {
     }
 
     private void testInsertUser(){
-        User awesomeDatabase = new User("fasfa", "jjfhd@yasdfjh.com", "password", User.Type.ADMIN, 999 );
+        User awesomeDatabase = new User("fasfa", "jjfhd@yasdfjh.com", "password", User.Type.ADMIN);
        try {
            insertUser(awesomeDatabase);
        }

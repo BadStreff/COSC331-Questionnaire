@@ -26,6 +26,7 @@ import spark.template.velocity.VelocityTemplateEngine;
 import db.Database;
 import db.Survey;
 import db.Question;
+import db.User;
 
 public class Questionnaire {
     public static void main(String[] args) {
@@ -96,6 +97,11 @@ public class Questionnaire {
             System.out.println("Username posted: " + request.queryParams("username"));
             System.out.println("Email posted: " + request.queryParams("email"));
             System.out.println("Password posted: " + request.queryParams("password"));
+            User u = new User(request.queryParams("username"),
+                    request.queryParams("email"),
+                    request.queryParams("password"),
+                    User.Type.REGULAR);
+            db.insertUser(u);
             return 0;
         });
     }

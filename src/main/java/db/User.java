@@ -2,6 +2,8 @@ package db;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Random;
+
 
 /**
  * Created by ajf023 on 10/12/2015.
@@ -30,12 +32,13 @@ public class User {
         this.uId = 0;
     }
 
-    public User(String userName,String email,String password,Type type,int uId){
+    public User(String userName,String email,String password,Type type){
+        Random r = new Random();
         this.userName = userName;
         this.email = email;
         this.password = hashPassword(password);
         this.type = type;
-        this.uId = uId;
+        this.uId = r.nextInt();
     }
 
     private String hashPassword(String password) {
