@@ -50,6 +50,7 @@ public class Questionnaire {
             //Redirect users that are not logged in to the login page
             if(request.cookie("uid") == null && !(path.contains("bootstrap/") ||
                     path.contains("/login")  ||
+                    path.contains("/sign_up")  ||
                     path.contains("js/")     ||
                     path.contains("css/"))) {
                 response.redirect("/login");
@@ -75,7 +76,7 @@ public class Questionnaire {
             System.out.println("Username posted: " + request.queryParams("username"));
             System.out.println("Password posted: " + request.queryParams("password"));
 
-            //response.cookie("uid", "uid", 3600);
+            //response.cookie("uid", "uid", 3600); //set a cookie for authenticated user
 
             //try createusersession
             //  issue a cookie with uid
@@ -88,9 +89,14 @@ public class Questionnaire {
 
         get("/sign_up", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
-
             // The wm files are located under the resources directory
             return new spark.ModelAndView(model, "/private/signup.html");
         }, new VelocityTemplateEngine());
+        post("/sign_up", (request, response) -> {
+            System.out.println("Username posted: " + request.queryParams("username"));
+            System.out.println("Email posted: " + request.queryParams("email"));
+            System.out.println("Password posted: " + request.queryParams("password"));
+            return 0;
+        });
     }
 }
