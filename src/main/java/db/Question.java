@@ -27,19 +27,22 @@ package db;
 public class Question {
     final String question;
     final String[] choice;
-    final QType type;
+    final Type type;
 
-    public enum QType {
-        TRUE_FALSE, MULTIPLE_CHOICE, MULTIPLE_SELECT, OPEN
+    public enum Type {
+        TRUE_FALSE(0), MULTIPLE_CHOICE(1), MULTIPLE_SELECT(2), OPEN(3);
+        private final int value;
+        Type(int value){this.value=value;}
+        public int getValue(){return this.value;}
     }
 
     public Question() {
         this.question = "";
         this.choice = new String[0];
-        this.type = QType.OPEN;
+        this.type = Type.OPEN;
     }
 
-    public Question(String question, String[] choice, QType type) {
+    public Question(String question, String[] choice, Type type) {
         this.question = question;
         this.choice = choice;
         this.type = type;

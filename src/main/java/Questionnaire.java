@@ -66,6 +66,7 @@ public class Questionnaire {
             return new spark.ModelAndView(model, "/private/index.html");
         }, new VelocityTemplateEngine());
 
+
         get("/login", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
             model.put("message", "Please login before accessing the site.");
