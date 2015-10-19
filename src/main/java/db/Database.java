@@ -60,7 +60,6 @@ public class Database {
         }
         else {
             System.out.println("Database Detected. Verifying Database Integrity...");
-            testInsertUser();
             //TODO
         }
     }
