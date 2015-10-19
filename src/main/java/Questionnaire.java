@@ -79,9 +79,11 @@ public class Questionnaire {
             System.out.println("Password posted: " + request.queryParams("password"));
 
             //response.cookie("uid", "uid", 3600); //set a cookie for authenticated user
+            //response.redirect("/");
 
             //try createusersession
             //  issue a cookie with uid
+            //  redirect to homepage
             //catch
             //  redirect to login page with err message
 
