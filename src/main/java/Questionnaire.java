@@ -45,9 +45,6 @@ public class Questionnaire {
             String path = request.pathInfo();
             System.out.println("Serving " + path + " to " + request.ip());
 
-            //if(request.cookie("uid") != null)
-            //    System.out.println("Got uid cookie: " + request.cookie("uid"));
-
             //Redirect users that are not logged in to the login page
             if(request.cookie("uid") == null && !(path.contains("bootstrap/") ||
                     path.contains("/login")  ||
@@ -78,9 +75,10 @@ public class Questionnaire {
             System.out.println("Username posted: " + request.queryParams("username"));
             System.out.println("Password posted: " + request.queryParams("password"));
 
-            //response.cookie("uid", "uid", 3600); //set a cookie for authenticated user
-            //response.redirect("/");
+            response.cookie("uid", "", 3600); //set a cookie for authenticated user
+            response.redirect("/");
 
+            //TODO
             //try createusersession
             //  issue a cookie with uid
             //  redirect to homepage

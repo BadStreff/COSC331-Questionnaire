@@ -8,7 +8,6 @@
     <!-- styles -->
     <link href="css/styles.css" rel="stylesheet">
 
-
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -23,28 +22,40 @@
             <div class="col-md-12">
                 <!-- Logo -->
                 <div class="logo">
-                    <h1><a href="/">COSC3318-Questionnaire</a></h1>
+                    <h1><a href="index.html">COSC3318-Questionnaire</a></h1>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<div class="page-content container">
-    <div class="row">
+<div class="container">
+    <div class="row margin-top-25">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="well">You must login before accessing the site.</div>
+        </div>
+    </div>
+    <div class="row margin-top-15">
         <div class="col-md-4 col-md-offset-4">
-            <div class="login-wrapper">
-                <div class="box">
-                    <div class="content-wrap">
-                        <input class="form-control" id="username" type="text" placeholder="Username">
-                        <input class="form-control" id="password" type="password" placeholder="Password">
-
-                        <div class="action">
-                            <a class="btn btn-primary login" href="/">Login</a>
-                        </div>
+            <div class="panel panel-default box-shadow">
+                <div class="panel-heading text-center">
+                    <h4>Login</h4>
+                </div>
+                <div class="panel-body">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="username" placeholder="Username">
+                        <span class="input-group-addon" id="basic-addon1">@</span>
+                    </div>
+                    <div class="input-group margin-top-10">
+                        <input type="password" class="form-control" id="password" placeholder="Password">
+                        <span class="input-group-addon" id="basic-addon3">@</span>
+                    </div>
+                    <div class="action margin-top-15 text-center">
+                        <a class="btn btn-primary login" href="/">Login</a>
                     </div>
                 </div>
-
+            </div>
+            <div class="login-wrapper">
                 <div class="already">
                     <p>Don't have an account yet?</p>
                     <a href="sign_up">Sign Up</a>
@@ -55,12 +66,14 @@
 </div>
 
 
+
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://code.jquery.com/jquery.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="bootstrap/js/bootstrap.min.js"></script>
 <script src="js/custom.js"></script>
-
 <script src="js/login.js"></script>
+
+
 </body>
 </html>
