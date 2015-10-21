@@ -53,6 +53,10 @@ public class Questionnaire {
                     path.contains("css/"))) {
                 response.redirect("/login");
             }
+            else if(request.cookie("uid") != null &&
+                    path.contains("/login")) {
+                response.redirect("/");
+            }
         });
 
         get("/", (request, response) -> {
@@ -75,7 +79,7 @@ public class Questionnaire {
             System.out.println("Username posted: " + request.queryParams("username"));
             System.out.println("Password posted: " + request.queryParams("password"));
 
-            response.cookie("uid", "", 3600); //set a cookie for authenticated user
+            response.cookie("uid", ""); //set a cookie for authenticated user
             response.redirect("/");
 
             //TODO
@@ -105,5 +109,7 @@ public class Questionnaire {
             db.insertUser(u);
             return 0;
         });
+
+
     }
 }
