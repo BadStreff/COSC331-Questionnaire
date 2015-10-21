@@ -86,7 +86,7 @@ public class Database {
         //TODO
     }
 
-    public int createUserSession(String name, String password) throws Exception {
+    public int createUserSession(String name, String password) throws BadCredentialsException {
         //TODO
         return 0;//returns the uid of the user or throws an exception if no user found
     }
@@ -94,7 +94,7 @@ public class Database {
         //TODO
         return false;
     }
-    public void insertUser(User user) throws ClassNotFoundException  {
+    public void insertUser(User user) throws ClassNotFoundException,UserAlreadyExistException  {
         Class.forName("org.sqlite.JDBC");
         Connection connection = null;
         try {
@@ -198,5 +198,19 @@ public class Database {
     //Check if the database already exist or not
     private boolean exists() {
         return new File(DB_NAME).isFile();
+    }
+
+    /**===============================================
+     *  Exceptions
+     *==============================================*/
+    public class BadCredentialsException extends Exception {
+        BadCredentialsException() {
+            super();
+        }
+    }
+    public class UserAlreadyExistException extends Exception {
+        UserAlreadyExistException() {
+            super();
+        }
     }
 }
