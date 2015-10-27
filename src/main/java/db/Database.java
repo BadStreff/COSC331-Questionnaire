@@ -92,28 +92,21 @@ public class Database {
     public int createUserSession(String name, String password) throws BadCredentialsException,ClassNotFoundException {
         Class.forName("org.sqlite.JDBC");
         Connection connection = null;
+        int uId = 0;
         try {
             // create a database connection
             connection = DriverManager.getConnection("jdbc:sqlite:" + DB_NAME);
             Statement statement = connection.createStatement();
             statement.setQueryTimeout(10);  // set timeout to 10 sec.
-
             ResultSet rs = statement.executeQuery("select * from Users where username = '" + name + "'");
-            while(rs.next())
-            {
-                // read the result set
 
-                 System.out.println()
-                if (User.hashPassword(rs.getString("password")).equals(User.hashPassword(password))) {
-                    System.out.println("name = " + rs.getString("username"));
-                    System.out.println("id = " + rs.getInt("uid"));
-                    return rs.getInt("uid");
-                }
-            }
+            //Check if the username and password match, if not throw an exception
+            if (rs.isBeforeFirst() && rs.getString("password").equals(User.hashPassword(password)))
+                uId = rs.getInt("uid");
+            else
+                throw new BadCredentialsException();
         }
         catch(SQLException e) {
-            // if the error message is "out of memory",
-            // it probably means no database file is found
             System.err.println(e.getMessage());
         }
         finally {
@@ -126,7 +119,7 @@ public class Database {
                 System.err.println(e);
             }
         }
-        return 0;//returns the uid of the user or throws an exception if no user found
+        return uId;//returns the uid of the user or throws an exception if no user found
     }
     public boolean isAdmin(int uId) {
         //TODO
@@ -241,12 +234,12 @@ public class Database {
     /**===============================================
      *  Exceptions
      *==============================================*/
-    public class BadCredentialsException extends Exception {
+    public static class BadCredentialsException extends Exception {
         BadCredentialsException() {
             super();
         }
     }
-    public class UserAlreadyExistException extends Exception {
+    public static class UserAlreadyExistException extends Exception {
         UserAlreadyExistException() {
             super();
         }

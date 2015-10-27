@@ -96,6 +96,7 @@ public class Questionnaire {
         get("/sign_up", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
             // The wm files are located under the resources directory
+            response.redirect("/");
             return new spark.ModelAndView(model, "/private/signup.html");
         }, new VelocityTemplateEngine());
         post("/sign_up", (request, response) -> {
@@ -109,7 +110,5 @@ public class Questionnaire {
             db.insertUser(u);
             return 0;
         });
-
-
     }
 }
