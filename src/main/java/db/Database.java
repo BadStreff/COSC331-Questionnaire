@@ -40,6 +40,7 @@ import java.sql.Statement;
 
 import db.Survey;
 import db.Question;
+import db.User;
 
 public class Database {
     private final String DB_NAME = "Questionnaire.db";
@@ -59,6 +60,8 @@ public class Database {
             }
         }
         else {
+            try {createUserSession("blah", "blah");}
+            catch (Exception e){}
             System.out.println("Database Detected. Verifying Database Integrity...");
             //TODO
         }
@@ -86,8 +89,43 @@ public class Database {
         //TODO
     }
 
-    public int createUserSession(String name, String password) throws BadCredentialsException {
-        //TODO
+    public int createUserSession(String name, String password) throws BadCredentialsException,ClassNotFoundException {
+        Class.forName("org.sqlite.JDBC");
+        Connection connection = null;
+        try {
+            // create a database connection
+            connection = DriverManager.getConnection("jdbc:sqlite:" + DB_NAME);
+            Statement statement = connection.createStatement();
+            statement.setQueryTimeout(10);  // set timeout to 10 sec.
+
+            ResultSet rs = statement.executeQuery("select * from Users where username = '" + name + "'");
+            while(rs.next())
+            {
+                // read the result set
+
+                 System.out.println()
+                if (User.hashPassword(rs.getString("password")).equals(User.hashPassword(password))) {
+                    System.out.println("name = " + rs.getString("username"));
+                    System.out.println("id = " + rs.getInt("uid"));
+                    return rs.getInt("uid");
+                }
+            }
+        }
+        catch(SQLException e) {
+            // if the error message is "out of memory",
+            // it probably means no database file is found
+            System.err.println(e.getMessage());
+        }
+        finally {
+            try {
+                if(connection != null)
+                    connection.close();
+            }
+            catch(SQLException e) {
+                // connection close failed.
+                System.err.println(e);
+            }
+        }
         return 0;//returns the uid of the user or throws an exception if no user found
     }
     public boolean isAdmin(int uId) {

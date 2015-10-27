@@ -41,7 +41,7 @@ public class User {
         this.uId = r.nextInt();
     }
 
-    private String hashPassword(String password) {
+    public static String hashPassword(String password) {
         MessageDigest md;
         try {
             md = MessageDigest.getInstance("SHA-256");
