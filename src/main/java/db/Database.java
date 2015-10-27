@@ -60,8 +60,6 @@ public class Database {
             }
         }
         else {
-            try {createUserSession("blah", "blah");}
-            catch (Exception e){}
             System.out.println("Database Detected. Verifying Database Integrity...");
             //TODO
         }

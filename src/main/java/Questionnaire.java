@@ -53,7 +53,7 @@ public class Questionnaire {
                     path.contains("css/"))) {
                 response.redirect("/login");
             }
-            else if(request.cookie("uid") != null &&
+            if(request.cookie("uid") != null &&
                     (path.contains("/login") ||
                      path.contains("/sign_up"))) {
                 response.redirect("/");
@@ -79,16 +79,17 @@ public class Questionnaire {
         post("/login", (request, response) -> {
             System.out.println("Username posted: " + request.queryParams("username"));
             System.out.println("Password posted: " + request.queryParams("password"));
+            String username = request.queryParams("username");
+            String password = request.queryParams("password");
 
-            response.cookie("uid", ""); //set a cookie for authenticated user
-            response.redirect("/");
-
-            //TODO
-            //try createusersession
-            //  issue a cookie with uid
-            //  redirect to homepage
-            //catch
-            //  redirect to login page with err message
+            try {
+                int uid = db.createUserSession(username, password);
+                response.cookie("uid", String.valueOf(uid));
+            }
+            catch(Database.BadCredentialsException e) {
+                System.out.println("Bad login credentials");
+                //edit response
+            }
 
             return 0;
         });
