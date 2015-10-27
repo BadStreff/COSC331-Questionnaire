@@ -5,13 +5,13 @@ $(document).ready(function(){
     var r = 'None';
 
     $('a.btn.btn-primary.login').click( function (e){
-        $.post('/login', {'username': $("input[id='username']").val(),
-                          'password': $("input[id='password']").val()}).done(function(result){
+               $.post('/login', {'username': $("input[id='username']").val(),
+                                 'password': $("input[id='password']").val()}).done(function(result){
 
-                console.log("Post data sent: ");
-                console.log({'username': $("input[id='username']").val(),
-                             'password': $("input[id='password']").val()});
-                e.preventDefault();
-        });
-    });
+                       console.log("Post data sent: ");
+                       console.log({'username': $("input[id='username']").val(),
+                                    'password': $("input[id='password']").val()});
+                       e.preventDefault();
+               });
+           });
 });

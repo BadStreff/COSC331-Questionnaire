@@ -16,5 +16,9 @@ $(document).ready(function(){
       $li.addClass("open");
     }
   });
+
+    $('a#logout').click( function (e){
+          Cookies.remove('uid');
+    });
   
 });
