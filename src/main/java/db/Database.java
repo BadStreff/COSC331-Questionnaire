@@ -141,6 +141,7 @@ public class Database {
             // if the error message is "out of memory",
             // it probably means no database file is found
             System.err.println(e.getMessage());
+            throw new UserAlreadyExistException();
         }
         finally {
             try {

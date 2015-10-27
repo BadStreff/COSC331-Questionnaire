@@ -107,7 +107,13 @@ public class Questionnaire {
                     request.queryParams("email"),
                     request.queryParams("password"),
                     User.Type.REGULAR);
-            db.insertUser(u);
+            try {
+                db.insertUser(u);
+            }
+            catch(db.Database.UserAlreadyExistException e) {
+                //Return a response to let the user know there was an error
+                System.out.println("User already exist");
+            }
             return 0;
         });
     }
