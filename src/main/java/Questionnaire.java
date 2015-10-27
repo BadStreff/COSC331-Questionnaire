@@ -54,7 +54,8 @@ public class Questionnaire {
                 response.redirect("/login");
             }
             else if(request.cookie("uid") != null &&
-                    path.contains("/login")) {
+                    (path.contains("/login") ||
+                     path.contains("/sign_up"))) {
                 response.redirect("/");
             }
         });
@@ -96,7 +97,6 @@ public class Questionnaire {
         get("/sign_up", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
             // The wm files are located under the resources directory
-            response.redirect("/");
             return new spark.ModelAndView(model, "/private/signup.html");
         }, new VelocityTemplateEngine());
         post("/sign_up", (request, response) -> {

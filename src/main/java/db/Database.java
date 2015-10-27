@@ -188,7 +188,7 @@ public class Database {
             Statement stmt = connection.createStatement();
             stmt.execute("PRAGMA foreign_keys = ON;");
             stmt.execute("CREATE TABLE Users(uid INTEGER PRIMARY KEY, " +
-                            "username STRING, " +
+                            "username STRING UNIQUE, " +
                             "email STRING, " +
                             "password STRING, " +
                             "type INTEGER);");
