@@ -82,19 +82,15 @@ public class Questionnaire {
             System.out.println("Password posted: " + request.queryParams("password"));
             String username = request.queryParams("username");
             String password = request.queryParams("password");
-
             try {
                 int uid = db.createUserSession(username, password);
-                //response.cookie("uid", String.valueOf(uid));
                 request.session(true);
                 request.session().attribute("uid", String.valueOf(uid));
             }
             catch(Database.BadCredentialsException e) {
-                System.out.println("Bad login credentials");
-                //edit response
+                return "failure";
             }
-
-            return 0;
+            return "success";
         });
 
 
@@ -123,10 +119,9 @@ public class Questionnaire {
                 request.session().attribute("uid", String.valueOf(uid));
             }
             catch(db.Database.UserAlreadyExistException e) {
-                //Return a response to let the user know there was an error
-                System.out.println("User already exist");
+                return "failure";
             }
-            return 0;
+            return "success";
         });
     }
 }

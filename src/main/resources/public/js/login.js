@@ -5,7 +5,15 @@ $(document).ready(function(){
             console.log("Post data sent: ");
             console.log({'username': $("input[id='username']").val(),
                          'password': $("input[id='password']").val()});
-            window.location.href = '/';
+            switch(result) {
+                case "success":
+                    window.location.href = '/';
+                    break;
+                case "failure":
+                    console.log("login failed");
+                    $("#error_modal").modal('show');
+                    break;
+            }
          });
     });
 });

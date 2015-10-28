@@ -15,7 +15,14 @@ $(document).ready(function(){
                              'email': $("input[id='email']").val(),
                              'password': $("input[id='password']").val(),
                              'confirmpassword': $("input[id='confirmpassword']").val()});
-                window.location.href = '/';
+                switch(result) {
+                    case "success":
+                        window.location.href = '/';
+                        break;
+                    case "failure":
+                        console.log("login failed");
+                        break;
+                }
         });
     });
 });
