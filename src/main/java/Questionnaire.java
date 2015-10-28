@@ -123,5 +123,11 @@ public class Questionnaire {
             }
             return "success";
         });
+
+        post("/userexist", (request, response) -> {
+            String username = request.queryParams("username");
+            System.out.println("Checking username: " + username);
+            return "failure";
+        });
     }
 }

@@ -14,6 +14,7 @@ $(document).ready(function(){
                     $("#error_modal").modal('show');
                     break;
             }
+            console.log(result);
          });
     });
 });
