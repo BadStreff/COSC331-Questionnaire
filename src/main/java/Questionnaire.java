@@ -104,15 +104,23 @@ public class Questionnaire {
             return new spark.ModelAndView(model, "/private/signup.html");
         }, new VelocityTemplateEngine());
         post("/sign_up", (request, response) -> {
-            System.out.println("Username posted: " + request.queryParams("username"));
-            System.out.println("Email posted: " + request.queryParams("email"));
-            System.out.println("Password posted: " + request.queryParams("password"));
-            User u = new User(request.queryParams("username"),
-                    request.queryParams("email"),
-                    request.queryParams("password"),
+            String username = request.queryParams("username");
+            String email = request.queryParams("email");
+            String password = request.queryParams("password");
+
+            System.out.println("Username posted: " + username);
+            System.out.println("Email posted: " + email);
+            System.out.println("Password posted: " + password);
+
+            User u = new User(username,
+                    email,
+                    password,
                     User.Type.REGULAR);
             try {
                 db.insertUser(u);
+                request.session(true);
+                int uid = db.createUserSession(username, password);
+                request.session().attribute("uid", String.valueOf(uid));
             }
             catch(db.Database.UserAlreadyExistException e) {
                 //Return a response to let the user know there was an error

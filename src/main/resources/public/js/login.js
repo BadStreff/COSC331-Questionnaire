@@ -5,7 +5,7 @@ $(document).ready(function(){
             console.log("Post data sent: ");
             console.log({'username': $("input[id='username']").val(),
                          'password': $("input[id='password']").val()});
-            window.location.replace("http://localhost:4567/");
+            window.location.href = '/';
          });
     });
 });
