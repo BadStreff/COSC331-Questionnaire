@@ -19,8 +19,8 @@ public class User {
 
 
     final public String userName;
-    final public  String email;
-    final public  String password;
+    final public String email;
+    final public String password;
     final public Type type;
     final public int uId;
 
