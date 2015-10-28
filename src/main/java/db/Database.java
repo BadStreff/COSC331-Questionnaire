@@ -123,6 +123,35 @@ public class Database {
         //TODO
         return false;
     }
+    public boolean userExist(String username) throws ClassNotFoundException {
+        Class.forName("org.sqlite.JDBC");
+        Connection connection = null;
+        try {
+            // create a database connection
+            connection = DriverManager.getConnection("jdbc:sqlite:" + DB_NAME);
+            Statement statement = connection.createStatement();
+            statement.setQueryTimeout(10);  // set timeout to 10 sec.
+            ResultSet rs = statement.executeQuery("select * from Users where username = '" + username + "'");
+
+            //If no result, then the user does not exist
+            if (!rs.isBeforeFirst())
+                return false;
+        }
+        catch(SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        finally {
+            try {
+                if(connection != null)
+                    connection.close();
+            }
+            catch(SQLException e) {
+                // connection close failed.
+                System.err.println(e);
+            }
+        }
+        return true;
+    }
     public void insertUser(User user) throws ClassNotFoundException,UserAlreadyExistException  {
         Class.forName("org.sqlite.JDBC");
         Connection connection = null;
