@@ -18,11 +18,11 @@ public class User {
     }
 
 
-    final String userName;
-    final String email;
-    final String password;
-    final Type type;
-    final int uId;
+    final public String userName;
+    final public  String email;
+    final public  String password;
+    final public Type type;
+    final public int uId;
 
     public User(){
         this.userName = "";
