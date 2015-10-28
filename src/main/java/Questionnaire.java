@@ -46,14 +46,15 @@ public class Questionnaire {
             System.out.println("Serving " + path + " to " + request.ip());
 
             //Redirect users that are not logged in to the login page
-            if(request.cookie("uid") == null && !(path.contains("bootstrap/") ||
+            if(request.session().attribute("uid") == null && //request.cookie("uid") == null &&
+                    !(path.contains("bootstrap/") ||
                     path.contains("/login")  ||
                     path.contains("/sign_up")  ||
                     path.contains("js/")     ||
                     path.contains("css/"))) {
                 response.redirect("/login");
             }
-            if(request.cookie("uid") != null &&
+            if(request.session().attribute("uid") != null && //request.cookie("uid") != null &&
                     (path.contains("/login") ||
                      path.contains("/sign_up"))) {
                 response.redirect("/");
@@ -84,7 +85,9 @@ public class Questionnaire {
 
             try {
                 int uid = db.createUserSession(username, password);
-                response.cookie("uid", String.valueOf(uid));
+                //response.cookie("uid", String.valueOf(uid));
+                request.session(true);
+                request.session().attribute("uid", String.valueOf(uid));
             }
             catch(Database.BadCredentialsException e) {
                 System.out.println("Bad login credentials");

@@ -18,7 +18,7 @@ $(document).ready(function(){
   });
 
     $('a#logout').click( function (e){
-          Cookies.remove('uid');
+          Cookies.remove('JSESSIONID');
     });
   
 });
