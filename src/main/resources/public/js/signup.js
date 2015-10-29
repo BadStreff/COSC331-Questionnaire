@@ -1,14 +1,21 @@
 $(document).ready(function(){
+    var validUser=true;
     $('#username').focusout(function (e) {
         $.post('/userexist', {'username': $("input[id='username']").val(),
                                    'password': $("input[id='password']").val()}).done(function(result){
-                    console.log("Post data sent: ");
-                    console.log({'username': $("input[id='username']").val(),
-                                 'password': $("input[id='password']").val()});
-                    console.log(result);
-                 });
-        $('.glyphicon-user').css('text-shadow','0 0 2px #5cb85c');
-        $('.glyphicon-user').css('color','#5cb85c');
+            console.log("Response: ");
+            console.log(result);
+            if(result == "false") {
+                validUser=true;
+                $('.glyphicon-user').css('text-shadow','0 0 2px #5cb85c');
+                $('.glyphicon-user').css('color','#5cb85c');
+            }
+            else {
+                validUser=false;
+                $('.glyphicon-user').css('text-shadow','0 0 2px #d9534f');
+                $('.glyphicon-user').css('color','#d9534f');
+            }
+        });
     });
 
     $('#email').focusout(function (e) {
@@ -38,7 +45,8 @@ $(document).ready(function(){
     });
 
     $('a.btn.btn-primary.signup').click( function (e){
-        $.post('/sign_up', {'username': $("input[id='username']").val(),
+        if(validUser && $('#password').val() == $('#confirmpassword').val()) {
+            $.post('/sign_up', {'username': $("input[id='username']").val(),
                             'email': $("input[id='email']").val(),
                             'password': $("input[id='password']").val(),
                             'confirmpassword': $("input[id='confirmpassword']").val()}).done(function(result){
@@ -54,9 +62,14 @@ $(document).ready(function(){
                         break;
                     case "failure":
                         console.log("signup failed");
+                        $("#error_modal").modal('show');
                         break;
                 }
-        });
+            });
+        }
+        else {
+            $("#error_modal").modal('show');
+        }
     });
 });
 /*

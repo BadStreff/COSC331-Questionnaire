@@ -51,7 +51,8 @@ public class Questionnaire {
                     path.contains("/login")  ||
                     path.contains("/sign_up")  ||
                     path.contains("js/")     ||
-                    path.contains("css/"))) {
+                    path.contains("css/") ||
+                    path.contains("/userexist"))) {
                 response.redirect("/login");
             }
             if(request.session().attribute("uid") != null && //request.cookie("uid") != null &&
@@ -127,7 +128,7 @@ public class Questionnaire {
         post("/userexist", (request, response) -> {
             String username = request.queryParams("username");
             System.out.println("Checking username: " + username);
-            return "failure";
+            return db.userExist(username);
         });
     }
 }
