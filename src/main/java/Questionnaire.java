@@ -46,18 +46,11 @@ public class Questionnaire {
             System.out.println("Serving " + path + " to " + request.ip());
 
             //Redirect users that are not logged in to the login page
-            if(request.session().attribute("uid") == null && //request.cookie("uid") == null &&
-                    !(path.contains("bootstrap/") ||
-                    path.contains("/login")  ||
-                    path.contains("/sign_up")  ||
-                    path.contains("js/")     ||
-                    path.contains("css/") ||
-                    path.contains("/userexist"))) {
+            if(request.session().attribute("uid") == null && !publicPath(path)) {
                 response.redirect("/login");
             }
-            if(request.session().attribute("uid") != null && //request.cookie("uid") != null &&
-                    (path.contains("/login") ||
-                     path.contains("/sign_up"))) {
+            //Redirect users logged in to the home page, if trying to access non-auth pages
+            if(request.session().attribute("uid") != null && forbiddenPath(path)) {
                 response.redirect("/");
             }
         });
@@ -65,8 +58,6 @@ public class Questionnaire {
         get("/", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
             model.put("message", "Please take the time to complete any surveys you have in your queue.");
-
-            // The wm files are located under the resources directory
             return new spark.ModelAndView(model, "/private/index.html");
         }, new VelocityTemplateEngine());
 
@@ -94,10 +85,8 @@ public class Questionnaire {
             return "success";
         });
 
-
         get("/sign_up", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
-            // The wm files are located under the resources directory
             return new spark.ModelAndView(model, "/private/signup.html");
         }, new VelocityTemplateEngine());
         post("/sign_up", (request, response) -> {
@@ -130,5 +119,23 @@ public class Questionnaire {
             System.out.println("Checking username: " + username);
             return db.userExist(username);
         });
+    }
+
+    public static boolean publicPath(String pathInfo) {
+        String[] paths = {"/css","/bootstrap", "/js", "/images",
+                "/vendors", "/login", "/sign_up", "/userexist"};
+        boolean r = false;
+        for(String i : paths)
+            if(pathInfo.contains(i))
+                r = true;
+        return r;
+    }
+    public static boolean forbiddenPath(String pathInfo) {
+        String[] paths = {"/login", "/sign_up", "/userexist"};
+        boolean r = false;
+        for(String i : paths)
+            if(pathInfo.contains(i))
+                r = true;
+        return r;
     }
 }
