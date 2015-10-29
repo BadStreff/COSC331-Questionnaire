@@ -46,11 +46,11 @@ public class Questionnaire {
             System.out.println("Serving " + path + " to " + request.ip());
 
             //Redirect users that are not logged in to the login page
-            if(request.session().attribute("uid") == null && !publicPath(path)) {
+            if(request.session().attribute("username") == null && !publicPath(path)) {
                 response.redirect("/login");
             }
             //Redirect users logged in to the home page, if trying to access non-auth pages
-            if(request.session().attribute("uid") != null && forbiddenPath(path)) {
+            if(request.session().attribute("username") != null && forbiddenPath(path)) {
                 response.redirect("/");
             }
         });
@@ -74,15 +74,14 @@ public class Questionnaire {
             System.out.println("Password posted: " + request.queryParams("password"));
             String username = request.queryParams("username");
             String password = request.queryParams("password");
-            try {
-                int uid = db.createUserSession(username, password);
+            if (db.verifyUserCredentials(username, password)) {
                 request.session(true);
-                request.session().attribute("uid", String.valueOf(uid));
+                request.session().attribute("username", username);
+                return true;
             }
-            catch(Database.BadCredentialsException e) {
-                return "failure";
+            else {
+                return false;
             }
-            return "success";
         });
 
         get("/sign_up", (request, response) -> {
@@ -105,13 +104,12 @@ public class Questionnaire {
             try {
                 db.insertUser(u);
                 request.session(true);
-                int uid = db.createUserSession(username, password);
-                request.session().attribute("uid", String.valueOf(uid));
+                request.session().attribute("username", username);
             }
             catch(db.Database.UserAlreadyExistException e) {
-                return "failure";
+                return false;
             }
-            return "success";
+            return true;
         });
 
         post("/userexist", (request, response) -> {

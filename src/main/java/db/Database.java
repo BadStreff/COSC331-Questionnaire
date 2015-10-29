@@ -87,7 +87,7 @@ public class Database {
         //TODO
     }
 
-    public int createUserSession(String username, String password) throws BadCredentialsException,ClassNotFoundException {
+    public boolean verifyUserCredentials(String username, String password) throws ClassNotFoundException {
         Class.forName("org.sqlite.JDBC");
         Connection connection = null;
         int uId = 0;
@@ -100,9 +100,9 @@ public class Database {
 
             //Check if the username and password match, if not throw an exception
             if (rs.isBeforeFirst() && rs.getString("password").equals(User.hashPassword(password)))
-                uId = rs.getInt("uid");
+                return true;
             else
-                throw new BadCredentialsException();
+                return false;
         }
         catch(SQLException e) {
             System.err.println(e.getMessage());
@@ -113,11 +113,10 @@ public class Database {
                     connection.close();
             }
             catch(SQLException e) {
-                // connection close failed.
                 System.err.println(e);
             }
         }
-        return uId;//returns the uid of the user or throws an exception if no user found
+        return false;
     }
     public boolean isAdmin(String username) {
         //TODO

@@ -57,10 +57,10 @@ $(document).ready(function(){
                              'password': $("input[id='password']").val(),
                              'confirmpassword': $("input[id='confirmpassword']").val()});
                 switch(result) {
-                    case "success":
+                    case "true":
                         window.location.href = '/';
                         break;
-                    case "failure":
+                    case "false":
                         console.log("signup failed");
                         $("#error_modal").modal('show');
                         break;

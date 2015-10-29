@@ -6,10 +6,10 @@ $(document).ready(function(){
             console.log({'username': $("input[id='username']").val(),
                          'password': $("input[id='password']").val()});
             switch(result) {
-                case "success":
+                case "true":
                     window.location.href = '/';
                     break;
-                case "failure":
+                case "false":
                     console.log("login failed");
                     $("#error_modal").modal('show');
                     break;
