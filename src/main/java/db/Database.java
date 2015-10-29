@@ -87,7 +87,7 @@ public class Database {
         //TODO
     }
 
-    public int createUserSession(String name, String password) throws BadCredentialsException,ClassNotFoundException {
+    public int createUserSession(String username, String password) throws BadCredentialsException,ClassNotFoundException {
         Class.forName("org.sqlite.JDBC");
         Connection connection = null;
         int uId = 0;
@@ -96,7 +96,7 @@ public class Database {
             connection = DriverManager.getConnection("jdbc:sqlite:" + DB_NAME);
             Statement statement = connection.createStatement();
             statement.setQueryTimeout(10);  // set timeout to 10 sec.
-            ResultSet rs = statement.executeQuery("select * from Users where username = '" + name + "'");
+            ResultSet rs = statement.executeQuery("select * from Users where username = '" + username + "'");
 
             //Check if the username and password match, if not throw an exception
             if (rs.isBeforeFirst() && rs.getString("password").equals(User.hashPassword(password)))
@@ -119,7 +119,7 @@ public class Database {
         }
         return uId;//returns the uid of the user or throws an exception if no user found
     }
-    public boolean isAdmin(int uId) {
+    public boolean isAdmin(String username) {
         //TODO
         return false;
     }
