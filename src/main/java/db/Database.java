@@ -90,7 +90,7 @@ public class Database {
     public boolean verifyUserCredentials(String username, String password) throws ClassNotFoundException {
         Class.forName("org.sqlite.JDBC");
         Connection connection = null;
-        int uId = 0;
+
         try {
             // create a database connection
             connection = DriverManager.getConnection("jdbc:sqlite:" + DB_NAME);
@@ -160,7 +160,7 @@ public class Database {
             Statement statement = connection.createStatement();
             statement.setQueryTimeout(10);  // set timeout to 10 sec.
 
-            statement.executeUpdate("insert into Users values(" + user.uId + ",\"" + user.userName + "\",\""
+            statement.executeUpdate("insert into Users values(\"" + user.userName + "\",\""
                     + user.email + "\",\"" + user.password + "\"," + user.type.getValue() + ")");
         }
         catch(SQLException e) {
@@ -214,8 +214,7 @@ public class Database {
             connection = DriverManager.getConnection("jdbc:sqlite:" + DB_NAME);
             Statement stmt = connection.createStatement();
             stmt.execute("PRAGMA foreign_keys = ON;");
-            stmt.execute("CREATE TABLE Users(uid INTEGER PRIMARY KEY, " +
-                            "username STRING UNIQUE, " +
+            stmt.execute("CREATE TABLE Users(username STRING PRIMARY KEY, " +
                             "email STRING, " +
                             "password STRING, " +
                             "type INTEGER);");
@@ -230,13 +229,10 @@ public class Database {
                             "choices STRING," +
                             "FOREIGN KEY(sid) REFERENCES Surveys(sid));");
             stmt.execute("CREATE TABLE Answers(aid INTEGER PRIMARY KEY ASC, " +
-                            "uid INTEGER," +
                             "qid INTEGER," +
                             "answer STRING," +
-                            "FOREIGN KEY(uid) REFERENCES Users," +
                             "FOREIGN KEY(qid) REFERENCES Questions);");
             stmt.execute("CREATE TABLE Completed(sid INTEGER, " +
-                            "uid INTEGER," +
                             "date_complete TIMESTAMP);");
         }
         catch (SQLException e) {

@@ -22,14 +22,13 @@ public class User {
     final public String email;
     final public String password;
     final public Type type;
-    final public int uId;
+
 
     public User(){
         this.userName = "";
         this.email = "";
         this.password = "";
         this.type = Type.REGULAR;
-        this.uId = 0;
     }
 
     public User(String userName,String email,String password,Type type){
@@ -38,7 +37,6 @@ public class User {
         this.email = email;
         this.password = hashPassword(password);
         this.type = type;
-        this.uId = r.nextInt();
     }
 
     public static String hashPassword(String password) {
