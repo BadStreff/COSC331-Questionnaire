@@ -121,7 +121,7 @@ public class Database {
     }
     public boolean isAdmin(String username) {
         //TODO
-        return true;
+        return false;
     }
     public boolean userExist(String username) throws ClassNotFoundException {
         Class.forName("org.sqlite.JDBC");

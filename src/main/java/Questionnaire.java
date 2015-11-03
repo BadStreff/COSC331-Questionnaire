@@ -59,7 +59,7 @@ public class Questionnaire {
             //Halt if user attempts to login to an admin page
             if(adminPath(path)) {
                 if(!adminSession.contains(request.session().id()))
-                    halt(403, "403");
+                    halt(403, "<h1>403 Forbidden<h6>");
             }
         });
 
