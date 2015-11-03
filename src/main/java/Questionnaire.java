@@ -136,4 +136,12 @@ public class Questionnaire {
                 r = true;
         return r;
     }
+    public static boolean adminPath(String pathInfo) {
+        String[] paths = {"/admin"};
+        boolean r = false;
+        for(String i : paths)
+            if(pathInfo.contains(i))
+                r = true;
+        return r;
+    }
 }
