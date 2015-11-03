@@ -54,6 +54,7 @@ public class Database {
             try {
                 createDatabaseFile(DB_NAME);
                 createTables();
+                createAdminAccount();
             }
             catch (Exception e) {
                 System.err.println(e.getMessage());
@@ -120,7 +121,7 @@ public class Database {
     }
     public boolean isAdmin(String username) {
         //TODO
-        return false;
+        return true;
     }
     public boolean userExist(String username) throws ClassNotFoundException {
         Class.forName("org.sqlite.JDBC");
@@ -216,7 +217,7 @@ public class Database {
             stmt.execute("PRAGMA foreign_keys = ON;");
             //User Table
             stmt.execute("CREATE TABLE Users(username STRING PRIMARY KEY, " +
-                            "email STRING, " +
+                            "email STRING UNIQUE, " +
                             "password STRING, " +
                             "type INTEGER);");
             //Question Table
@@ -262,6 +263,13 @@ public class Database {
                 System.err.println(e);
             }
         }
+    }
+    private void createAdminAccount() {
+        User u = new User("admin", "admin", "admin", User.Type.ADMIN);
+        try {
+            insertUser(u);
+        }
+        catch(Exception e) {System.err.println("Could not create local admin account");}
     }
 
     //Check if the database already exist or not
