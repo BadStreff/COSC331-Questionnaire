@@ -20,6 +20,8 @@ import static spark.Spark.*;
 // Used for velocity templates.
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
+import java.util.ArrayList;
 import spark.template.velocity.VelocityTemplateEngine;
 
 
@@ -29,6 +31,7 @@ import db.Question;
 import db.User;
 
 public class Questionnaire {
+    private static List<String> adminSession = new ArrayList<String>();
     public static void main(String[] args) {
         Database db = new Database();
 
@@ -52,6 +55,11 @@ public class Questionnaire {
             //Redirect users logged in to the home page, if trying to access non-auth pages
             if(request.session().attribute("username") != null && forbiddenPath(path)) {
                 response.redirect("/");
+            }
+            //Halt if user attempts to login to an admin page
+            if(adminPath(path)) {
+                if(!adminSession.contains(request.session().id()))
+                    halt(403, "403");
             }
         });
 
@@ -77,6 +85,8 @@ public class Questionnaire {
             if (db.verifyUserCredentials(username, password)) {
                 request.session(true);
                 request.session().attribute("username", username);
+                if(db.isAdmin(username))
+                    adminSession.add(request.session().id());
                 return true;
             }
             else {
