@@ -68,7 +68,20 @@ public class Database {
     /**===============================================
      *  Public Members
      *==============================================*/
+    public boolean submitAnswer(int questionID, int choiceID) {
+        //TODO
+        return false;
+    }
+    public boolean insertQuestion(Question question) {
+        //TODO
+        return false;
+    }
+    public Question getRandomQuestion(String username) {
+        //TODO: Returns a random unanswere question for the user
+        return new Question();
+    }
 
+    //TODO: Wrap in a userservice
     public boolean deleteUser(String username) {
         //TODO
         return false;
