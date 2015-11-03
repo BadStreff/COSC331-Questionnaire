@@ -68,24 +68,6 @@ public class Database {
     /**===============================================
      *  Public Members
      *==============================================*/
-    public void addSurvey(Survey s) {
-        //TODO
-    }
-    public void deleteSurvey(int sid) {
-        //TODO
-    }
-    public Survey[] getSurveys(){
-        //TODO
-        return new Survey[0];
-    }
-    public Survey getSurvey(int sid){
-        //TODO
-        return new Survey();
-    }
-
-    public void submitSurveyAnswers() {
-        //TODO
-    }
 
     public boolean deleteUser(String username) {
         //TODO
