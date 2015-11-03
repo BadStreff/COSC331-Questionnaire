@@ -17,6 +17,10 @@
 
 package db;
 
+import java.util.Dictionary;
+import java.util.Map;
+import java.util.HashMap;
+
 /**
  * Note that this class is meant to be handled by the survey class.
  * You can think of a question object as the question along with its choices.
@@ -25,8 +29,9 @@ package db;
  */
 
 public class Question {
+    final int id;
     final String question;
-    final String[] choice;
+    final Map<Integer, String> choice;
     final Type type;
 
     public enum Type {
@@ -37,12 +42,14 @@ public class Question {
     }
 
     public Question() {
+        this.id = 0;
         this.question = "";
-        this.choice = new String[0];
+        this.choice = new HashMap<Integer,String>();
         this.type = Type.OPEN;
     }
 
-    public Question(String question, String[] choice, Type type) {
+    public Question(int id, String question, HashMap<Integer,String> choice, Type type) {
+        this.id = id;
         this.question = question;
         this.choice = choice;
         this.type = type;
