@@ -221,7 +221,7 @@ public class Database {
             //Question Table
             stmt.execute("CREATE TABLE Questions(qid INTEGER PRIMARY KEY, " +
                             "question STRING," +
-                    /*/TODO
+                            /*/TODO
                             "creation_timestamp TIMESTAMP," +
                             "publish_timestamp TIMESTAMP," +
                             /**/
