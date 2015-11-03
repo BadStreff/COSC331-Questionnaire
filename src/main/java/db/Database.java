@@ -87,6 +87,10 @@ public class Database {
         //TODO
     }
 
+    public boolean deleteUser(String username) {
+        //TODO
+        return false;
+    }
     public boolean verifyUserCredentials(String username, String password) throws ClassNotFoundException {
         Class.forName("org.sqlite.JDBC");
         Connection connection = null;
