@@ -221,8 +221,10 @@ public class Database {
             //Question Table
             stmt.execute("CREATE TABLE Questions(qid INTEGER PRIMARY KEY, " +
                             "question STRING," +
+                    /*/TODO
                             "creation_timestamp TIMESTAMP," +
                             "publish_timestamp TIMESTAMP," +
+                            /**/
                             "type INTEGER);");
             //Choice Table
             stmt.execute("CREATE TABLE Choices(cid INTEGER PRIMARY KEY ASC, " +
