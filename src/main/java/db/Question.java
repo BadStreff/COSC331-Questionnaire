@@ -46,7 +46,7 @@ public class Question {
     public Question() {
         this.id = 0;
         this.question = "";
-        this.choice = new HashMap<Integer,String>();
+        this.choice = new HashMap<>();
         this.type = Type.OPEN;
     }
 

@@ -68,6 +68,7 @@ public class Database {
     /**===============================================
      *  Public Members
      *==============================================*/
+    //TODO: Wrap in a question service
     public boolean submitAnswer(int questionID, int choiceID) {
         //TODO
         return false;
@@ -81,7 +82,7 @@ public class Database {
         return new Question();
     }
 
-    //TODO: Wrap in a userservice
+    //TODO: Wrap in a user service
     public boolean deleteUser(String username) {
         //TODO
         return false;
