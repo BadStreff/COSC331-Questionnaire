@@ -214,26 +214,39 @@ public class Database {
             connection = DriverManager.getConnection("jdbc:sqlite:" + DB_NAME);
             Statement stmt = connection.createStatement();
             stmt.execute("PRAGMA foreign_keys = ON;");
+            //User Table
             stmt.execute("CREATE TABLE Users(username STRING PRIMARY KEY, " +
                             "email STRING, " +
                             "password STRING, " +
                             "type INTEGER);");
+            //Question Table
+            stmt.execute("CREATE TABLE Questions(qid INTEGER PRIMARY KEY, " +
+                            "question STRING," +
+                            "creation_timestamp TIMESTAMP," +
+                            "publish_timestamp TIMESTAMP," +
+                            "type INTEGER);");
+            //Choice Table
+            stmt.execute("CREATE TABLE Choices(cid INTEGER PRIMARY KEY ASC, " +
+                            "qid INTEGER," +
+                            "choice STRING," +
+                            "FOREIGN KEY(qid) REFERENCES Questions);");
+            //Answer Table
+            stmt.execute("CREATE TABLE Answers(aid INTEGER PRIMARY KEY, " +
+                            "cid INTEGER," +
+                            "username STRING," +
+                            "FOREIGN KEY(username) REFERENCES Users," +
+                            "FOREIGN KEY(cid) REFERENCES Choices);");
+            /*/Survey Table (Deprecated)
             stmt.execute("CREATE TABLE Surveys(sid INTEGER PRIMARY KEY, " +
                             "name STRING, " +
                             "about STRING, " +
                             "creation_timestamp TIMESTAMP, " +
                             "publish_timestamp TIMESTAMP);");
-            stmt.execute("CREATE TABLE Questions(qid INTEGER PRIMARY KEY, " +
-                            "sid INTEGER," +
-                            "type INTEGER," +
-                            "choices STRING," +
-                            "FOREIGN KEY(sid) REFERENCES Surveys(sid));");
-            stmt.execute("CREATE TABLE Answers(aid INTEGER PRIMARY KEY ASC, " +
-                            "qid INTEGER," +
-                            "answer STRING," +
-                            "FOREIGN KEY(qid) REFERENCES Questions);");
+            /**/
+            /*/Completed Question Table (Deprecated)
             stmt.execute("CREATE TABLE Completed(sid INTEGER, " +
                             "date_complete TIMESTAMP);");
+            /**/
         }
         catch (SQLException e) {
             System.err.println(e);
