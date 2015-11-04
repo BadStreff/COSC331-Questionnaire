@@ -56,4 +56,6 @@ public class Question {
         this.choice = choice;
         this.type = type;
     }
+    //TODO: Public getters are needed for the velocity engine
+    public String getQuestion() { return this.question; }
 }
