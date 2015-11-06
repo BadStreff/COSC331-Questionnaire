@@ -63,21 +63,10 @@ public class Database {
         }
         else {
             System.out.println("Database Detected. Verifying Database Integrity...");
-            //TODO
             try {
-                if (isAdmin("admin")) {
-                    System.out.println("Admin is tautalogy");
-                }
-
-                if(!isAdmin("test")){
-                    System.out.println("Testis not an Admin");
-                }
+                //Temp Testing Goes Here
             }
-
-            catch(Exception e) {
-
-            }
-
+            catch(Exception e) {}
         }
     }
 
@@ -90,11 +79,11 @@ public class Database {
         return false;
     }
     public boolean insertQuestion(Question question) {
-
+        //TODO
         return false;
     }
     public Question getRandomQuestion(String username) {
-        //TODO: Returns a random unanswere question for the user
+        //TODO: Returns a random unanswered question for the user
         return new Question();
     }
 
@@ -126,6 +115,10 @@ public class Database {
                 System.err.println(e);
             }
         }
+        return false;
+    }
+    public boolean changePassword(String username, String password){
+        //TODO
         return false;
     }
     public boolean verifyUserCredentials(String username, String password) throws ClassNotFoundException {
@@ -160,7 +153,6 @@ public class Database {
         return false;
     }
     public boolean isAdmin(String username) throws ClassNotFoundException {
-        //TODO
         Class.forName("org.sqlite.JDBC");
         Connection connection = null;
         try {
@@ -221,7 +213,7 @@ public class Database {
         }
         return true;
     }
-    public void insertUser(User user) throws ClassNotFoundException,UserAlreadyExistException  {
+    public void insertUser(User user) throws ClassNotFoundException,UserAlreadyExistException {
         Class.forName("org.sqlite.JDBC");
         Connection connection = null;
         try {
@@ -292,10 +284,6 @@ public class Database {
             //Question Table
             stmt.execute("CREATE TABLE Questions(qid INTEGER PRIMARY KEY, " +
                             "question STRING," +
-                            /*/TODO
-                            "creation_timestamp TIMESTAMP," +
-                            "publish_timestamp TIMESTAMP," +
-                            /**/
                             "type INTEGER);");
             //Choice Table
             stmt.execute("CREATE TABLE Choices(cid INTEGER PRIMARY KEY ASC, " +
@@ -308,17 +296,6 @@ public class Database {
                             "username STRING," +
                             "FOREIGN KEY(username) REFERENCES Users," +
                             "FOREIGN KEY(cid) REFERENCES Choices);");
-            /*/Survey Table (Deprecated)
-            stmt.execute("CREATE TABLE Surveys(sid INTEGER PRIMARY KEY, " +
-                            "name STRING, " +
-                            "about STRING, " +
-                            "creation_timestamp TIMESTAMP, " +
-                            "publish_timestamp TIMESTAMP);");
-            /**/
-            /*/Completed Question Table (Deprecated)
-            stmt.execute("CREATE TABLE Completed(sid INTEGER, " +
-                            "date_complete TIMESTAMP);");
-            /**/
         }
         catch (SQLException e) {
             System.err.println(e);
