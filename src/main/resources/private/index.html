@@ -56,7 +56,17 @@
                 <div class="content-box-large">
                     ${message}
                     <br/><br/>
-                    ${surveys.name}
+
+                    ${question.question}
+                    <br/><br/>
+                    <!--
+                    ${question.choice.get(1)}
+                    -->
+                    #foreach ($key in $question.choice.keySet())
+                        <name>${key}.</name>
+                        <value>$question.choice.get($key)</value>
+                    <br/><br/>
+                    #end
                 </div>
             </div>
 

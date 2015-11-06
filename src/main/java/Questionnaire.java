@@ -66,6 +66,7 @@ public class Questionnaire {
         get("/", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
             model.put("message", "Please take the time to complete any surveys you have in your queue.");
+            model.put("question", db.getRandomQuestion(request.session().attribute("username")));
             return new spark.ModelAndView(model, "/private/index.html");
         }, new VelocityTemplateEngine());
 
