@@ -63,10 +63,7 @@ public class Database {
         else {
             System.out.println("Database Detected. Verifying Database Integrity...");
             //TODO
-            try{
-            deleteUser("test"); }
-
-            catch (Exception E) {}
+            
         }
     }
 
@@ -129,7 +126,7 @@ public class Database {
             ResultSet rs = statement.executeQuery("select * from Users where username = '" + username + "'");
 
             //Check if the username and password match, if not throw an exception
-            if (rs.isBeforeFirst() && rs.getString("password").equals(User.hashPassword(password)))
+            if (rs.isBeforeFirst() && rs.getString("password").equals(User.hashPassword(password, username)))
                 return true;
             else
                 return false;

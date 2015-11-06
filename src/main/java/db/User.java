@@ -35,11 +35,11 @@ public class User {
         Random r = new Random();
         this.userName = userName;
         this.email = email;
-        this.password = hashPassword(password);
+        this.password = hashPassword(password, userName);
         this.type = type;
     }
 
-    public static String hashPassword(String password) {
+    public static String hashPassword(String password, String userName) {
         MessageDigest md;
         try {
             md = MessageDigest.getInstance("SHA-256");
@@ -47,6 +47,9 @@ public class User {
             System.err.print("Unable to hash passwords, storing in plain text");
             return password;
         }
+
+        password = userName + password;
+
         md.update(password.getBytes());
 
         byte byteData[] = md.digest();
