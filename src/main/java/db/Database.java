@@ -104,7 +104,7 @@ public class Database {
         }
         return false;
     }
-    public boolean isAdmin(String username) throws ClassNotFoundException {
+    public boolean isAdmin(String username) {
         List<HashMap<String,String>> result;
         try {
             result = this.executeQuery("select * from Users where username = '" + username + "'");
@@ -117,7 +117,7 @@ public class Database {
         }
         return false;
     }
-    public boolean userExist(String username) throws ClassNotFoundException {
+    public boolean userExist(String username) {
         try {
             return !this.executeQuery("select * from Users where username = '" + username + "'").isEmpty();
         }
@@ -125,9 +125,10 @@ public class Database {
             return false;
         }
     }
-    public void insertUser(User user) throws ClassNotFoundException,UserAlreadyExistException {
-        this.executeUpdate("insert into Users values(\"" + user.userName + "\",\""
-                + user.email + "\",\"" + user.password + "\"," + user.type.getValue() + ")");
+    public void insertUser(User user) throws UserAlreadyExistException {
+        if (!this.executeUpdate("insert into Users values(\"" + user.userName + "\",\""
+                + user.email + "\",\"" + user.password + "\"," + user.type.getValue() + ")"))
+            throw new UserAlreadyExistException();
     }
 
     /**===============================================
