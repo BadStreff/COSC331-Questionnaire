@@ -63,6 +63,10 @@ public class Database {
         else {
             System.out.println("Database Detected. Verifying Database Integrity...");
             //TODO
+            try{
+            deleteUser("test"); }
+
+            catch (Exception E) {}
         }
     }
 
@@ -75,7 +79,7 @@ public class Database {
         return false;
     }
     public boolean insertQuestion(Question question) {
-        //TODO
+
         return false;
     }
     public Question getRandomQuestion(String username) {
@@ -84,8 +88,33 @@ public class Database {
     }
 
     //TODO: Wrap in a user service
-    public boolean deleteUser(String username) {
-        //TODO
+    public boolean deleteUser(String username)throws ClassNotFoundException {
+        Class.forName("org.sqlite.JDBC");
+        Connection connection = null;
+        try {
+            // create a database connection
+            connection = DriverManager.getConnection("jdbc:sqlite:" + DB_NAME);
+            Statement statement = connection.createStatement();
+            statement.setQueryTimeout(10);  // set timeout to 10 sec.
+
+            statement.executeUpdate("DELETE FROM Users WHERE username=\""+ username +"\";");
+        }
+        catch(SQLException e) {
+            // if the error message is "out of memory",
+            // it probably means no database file is found
+            System.err.println(e.getMessage());
+
+        }
+        finally {
+            try {
+                if(connection != null)
+                    connection.close();
+            }
+            catch(SQLException e) {
+                // connection close failed.
+                System.err.println(e);
+            }
+        }
         return false;
     }
     public boolean verifyUserCredentials(String username, String password) throws ClassNotFoundException {
