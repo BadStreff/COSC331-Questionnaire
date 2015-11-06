@@ -86,41 +86,21 @@ public class Database {
     }
 
     //TODO: Wrap in a user service
-    public boolean deleteUser(String username)throws ClassNotFoundException {
+    public boolean deleteUser(String username) {
         return this.executeUpdate("DELETE FROM Users WHERE username=\""+ username +"\";");
     }
     public boolean changePassword(String username, String password){
         //TODO
         return false;
     }
-    public boolean verifyUserCredentials(String username, String password) throws ClassNotFoundException {
-        Class.forName("org.sqlite.JDBC");
-        Connection connection = null;
-
+    public boolean verifyUserCredentials(String username, String password) {
         try {
-            // create a database connection
-            connection = DriverManager.getConnection("jdbc:sqlite:" + DB_NAME);
-            Statement statement = connection.createStatement();
-            statement.setQueryTimeout(10);  // set timeout to 10 sec.
-            ResultSet rs = statement.executeQuery("select * from Users where username = '" + username + "'");
-
-            //Check if the username and password match, if not throw an exception
-            if (rs.isBeforeFirst() && rs.getString("password").equals(User.hashPassword(password, username)))
+            List<HashMap<String,String>> rs = this.executeQuery("select * from Users where username = '" + username + "'");
+            if(rs.get(0).get("password").equals(User.hashPassword(password, username)))
                 return true;
-            else
-                return false;
         }
-        catch(SQLException e) {
+        catch(Exception e) {
             System.err.println(e.getMessage());
-        }
-        finally {
-            try {
-                if(connection != null)
-                    connection.close();
-            }
-            catch(SQLException e) {
-                System.err.println(e);
-            }
         }
         return false;
     }
@@ -138,64 +118,14 @@ public class Database {
         return false;
     }
     public boolean userExist(String username) throws ClassNotFoundException {
-        Class.forName("org.sqlite.JDBC");
-        Connection connection = null;
         try {
-            // create a database connection
-            connection = DriverManager.getConnection("jdbc:sqlite:" + DB_NAME);
-            Statement statement = connection.createStatement();
-            statement.setQueryTimeout(10);  // set timeout to 10 sec.
-            ResultSet rs = statement.executeQuery("select * from Users where username = '" + username + "'");
-
-            //If no result, then the user does not exist
-            if (!rs.isBeforeFirst())
-                return false;
+            return !this.executeQuery("select * from Users where username = '" + username + "'").isEmpty();
         }
-        catch(SQLException e) {
-            System.err.println(e.getMessage());
+        catch (Exception e) {
+            return false;
         }
-        finally {
-            try {
-                if(connection != null)
-                    connection.close();
-            }
-            catch(SQLException e) {
-                // connection close failed.
-                System.err.println(e);
-            }
-        }
-        return true;
     }
     public void insertUser(User user) throws ClassNotFoundException,UserAlreadyExistException {
-        /*
-        Class.forName("org.sqlite.JDBC");
-        Connection connection = null;
-        try {
-            // create a database connection
-            connection = DriverManager.getConnection("jdbc:sqlite:" + DB_NAME);
-            Statement statement = connection.createStatement();
-            statement.setQueryTimeout(10);  // set timeout to 10 sec.
-
-            statement.executeUpdate("insert into Users values(\"" + user.userName + "\",\""
-                    + user.email + "\",\"" + user.password + "\"," + user.type.getValue() + ")");
-        }
-        catch(SQLException e) {
-            // if the error message is "out of memory",
-            // it probably means no database file is found
-            System.err.println(e.getMessage());
-            throw new UserAlreadyExistException();
-        }
-        finally {
-            try {
-                if(connection != null)
-                    connection.close();
-            }
-            catch(SQLException e) {
-                // connection close failed.
-                System.err.println(e);
-            }
-        }
-        */
         this.executeUpdate("insert into Users values(\"" + user.userName + "\",\""
                 + user.email + "\",\"" + user.password + "\"," + user.type.getValue() + ")");
     }
@@ -235,24 +165,24 @@ public class Database {
             stmt.execute("PRAGMA foreign_keys = ON;");
             //User Table
             stmt.execute("CREATE TABLE Users(username STRING PRIMARY KEY, " +
-                            "email STRING UNIQUE, " +
-                            "password STRING, " +
-                            "type INTEGER);");
+                    "email STRING UNIQUE, " +
+                    "password STRING, " +
+                    "type INTEGER);");
             //Question Table
             stmt.execute("CREATE TABLE Questions(qid INTEGER PRIMARY KEY, " +
-                            "question STRING," +
-                            "type INTEGER);");
+                    "question STRING," +
+                    "type INTEGER);");
             //Choice Table
             stmt.execute("CREATE TABLE Choices(cid INTEGER PRIMARY KEY ASC, " +
-                            "qid INTEGER," +
-                            "choice STRING," +
-                            "FOREIGN KEY(qid) REFERENCES Questions);");
+                    "qid INTEGER," +
+                    "choice STRING," +
+                    "FOREIGN KEY(qid) REFERENCES Questions);");
             //Answer Table
             stmt.execute("CREATE TABLE Answers(aid INTEGER PRIMARY KEY, " +
-                            "cid INTEGER," +
-                            "username STRING," +
-                            "FOREIGN KEY(username) REFERENCES Users," +
-                            "FOREIGN KEY(cid) REFERENCES Choices);");
+                    "cid INTEGER," +
+                    "username STRING," +
+                    "FOREIGN KEY(username) REFERENCES Users," +
+                    "FOREIGN KEY(cid) REFERENCES Choices);");
         }
         catch (SQLException e) {
             System.err.println(e);
