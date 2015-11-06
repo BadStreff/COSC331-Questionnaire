@@ -41,6 +41,7 @@ import java.sql.Statement;
 import db.Survey;
 import db.Question;
 import db.User;
+import org.apache.commons.collections.functors.FalsePredicate;
 
 public class Database {
     private final String DB_NAME = "Questionnaire.db";
@@ -63,7 +64,20 @@ public class Database {
         else {
             System.out.println("Database Detected. Verifying Database Integrity...");
             //TODO
-            
+            try {
+                if (isAdmin("admin")) {
+                    System.out.println("Admin is tautalogy");
+                }
+
+                if(!isAdmin("test")){
+                    System.out.println("Testis not an Admin");
+                }
+            }
+
+            catch(Exception e) {
+
+            }
+
         }
     }
 
@@ -145,8 +159,37 @@ public class Database {
         }
         return false;
     }
-    public boolean isAdmin(String username) {
+    public boolean isAdmin(String username) throws ClassNotFoundException {
         //TODO
+        Class.forName("org.sqlite.JDBC");
+        Connection connection = null;
+        try {
+            if(!userExist(username)){
+                return false;
+            }
+            // create a database connection
+            connection = DriverManager.getConnection("jdbc:sqlite:" + DB_NAME);
+            Statement statement = connection.createStatement();
+            statement.setQueryTimeout(10);  // set timeout to 10 sec.
+            ResultSet rs = statement.executeQuery("select * from Users where username = '" + username + "'");
+
+            //If no result, then the user does not exist
+            if (rs.getInt("type") == User.Type.ADMIN.getValue())
+                return true;
+        }
+        catch(SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        finally {
+            try {
+                if(connection != null)
+                    connection.close();
+            }
+            catch(SQLException e) {
+                // connection close failed.
+                System.err.println(e);
+            }
+        }
         return false;
     }
     public boolean userExist(String username) throws ClassNotFoundException {
