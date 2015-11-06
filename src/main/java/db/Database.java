@@ -29,19 +29,17 @@ package db;
 
 import java.io.File;
 
-import java.security.MessageDigest;
-
-import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import db.Survey;
-import db.Question;
-import db.User;
-import org.apache.commons.collections.functors.FalsePredicate;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Database {
     private final String DB_NAME = "Questionnaire.db";
@@ -66,7 +64,7 @@ public class Database {
             try {
                 //Temp Testing Goes Here
             }
-            catch(Exception e) {}
+            catch(Exception e) {System.err.println(e.getMessage());}
         }
     }
 
@@ -153,34 +151,15 @@ public class Database {
         return false;
     }
     public boolean isAdmin(String username) throws ClassNotFoundException {
-        Class.forName("org.sqlite.JDBC");
-        Connection connection = null;
+        List<HashMap<String,String>> result;
         try {
-            if(!userExist(username)){
-                return false;
-            }
-            // create a database connection
-            connection = DriverManager.getConnection("jdbc:sqlite:" + DB_NAME);
-            Statement statement = connection.createStatement();
-            statement.setQueryTimeout(10);  // set timeout to 10 sec.
-            ResultSet rs = statement.executeQuery("select * from Users where username = '" + username + "'");
-
-            //If no result, then the user does not exist
-            if (rs.getInt("type") == User.Type.ADMIN.getValue())
+            result = this.executeQuery("select * from Users where username = '" + username + "'");
+            if(!result.isEmpty() && result.get(0).get("type").equals("0"))
                 return true;
         }
         catch(SQLException e) {
-            System.err.println(e.getMessage());
-        }
-        finally {
-            try {
-                if(connection != null)
-                    connection.close();
-            }
-            catch(SQLException e) {
-                // connection close failed.
-                System.err.println(e);
-            }
+            System.err.println("Error in isAdmin()");
+            System.err.println(e.toString());
         }
         return false;
     }
@@ -214,6 +193,7 @@ public class Database {
         return true;
     }
     public void insertUser(User user) throws ClassNotFoundException,UserAlreadyExistException {
+        /*
         Class.forName("org.sqlite.JDBC");
         Connection connection = null;
         try {
@@ -241,6 +221,9 @@ public class Database {
                 System.err.println(e);
             }
         }
+        */
+        this.executeUpdate("insert into Users values(\"" + user.userName + "\",\""
+                + user.email + "\",\"" + user.password + "\"," + user.type.getValue() + ")");
     }
 
     /**===============================================
@@ -312,10 +295,94 @@ public class Database {
     }
     private void createAdminAccount() {
         User u = new User("admin", "admin", "admin", User.Type.ADMIN);
-        try {
-            insertUser(u);
-        }
+        try {insertUser(u);}
         catch(Exception e) {System.err.println("Could not create local admin account");}
+    }
+
+    //TODO: executeUpdate() Testing
+    private boolean executeUpdate(String update) {
+        try {
+            Class.forName("org.sqlite.JDBC");
+        }
+        catch (ClassNotFoundException e) {
+            System.err.println("Unrecoverable Error: SQLite JDBC Driver not found. Exitting");
+            System.err.println(e.toString());
+            System.exit(1);
+        }
+        Connection connection = null;
+        try {
+            // create a database connection
+            connection = DriverManager.getConnection("jdbc:sqlite:" + DB_NAME);
+            Statement statement = connection.createStatement();
+            statement.setQueryTimeout(10);  // set timeout to 10 sec.
+
+            statement.executeUpdate(update);
+            return true;
+        }
+        catch(SQLException e) {
+            // if the error message is "out of memory",
+            // it probably means no database file is found
+            System.err.println(e.getMessage());
+            return false;
+        }
+        finally {
+            try {
+                if(connection != null)
+                    connection.close();
+            }
+            catch(SQLException e) {
+                // connection close failed.
+                System.err.println(e);
+            }
+        }
+    }
+    private List<HashMap<String,String>> executeQuery(String query) throws SQLException {
+        Connection connection = null;
+        ResultSet rs;
+        List<HashMap<String,String>> list = new LinkedList<>();
+
+        try {
+            Class.forName("org.sqlite.JDBC");
+        }
+        catch (ClassNotFoundException e) {
+            System.err.println("Unrecoverable Error: SQLite JDBC Driver not found. Exitting");
+            System.err.println(e.toString());
+            System.exit(1);
+        }
+
+        try {
+            // create a database connection
+            connection = DriverManager.getConnection("jdbc:sqlite:" + DB_NAME);
+            Statement statement = connection.createStatement();
+            statement.setQueryTimeout(10);  // set timeout to 10 sec.
+
+            rs = statement.executeQuery(query);
+            ResultSetMetaData rsmd = rs.getMetaData();
+
+            //Take the result and transform it into a list of dictionaries
+
+            while(rs.next()) {
+                HashMap<String,String> map = new HashMap<>();
+                for(int i = 1; i <= rsmd.getColumnCount(); i++)
+                    map.put(rsmd.getColumnLabel(i), rs.getString(i));
+                list.add(map);
+            }
+
+            return list;
+        }
+        catch(SQLException e) {
+            throw e;
+        }
+        finally {
+            try {
+                if(connection != null)
+                    connection.close();
+            }
+            catch(SQLException e) {
+                // connection close failed.
+                System.err.println(e);
+            }
+        }
     }
 
     //Check if the database already exist or not
