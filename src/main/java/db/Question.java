@@ -37,7 +37,7 @@ public class Question {
     final Type type;
 
     public enum Type {
-        TRUE_FALSE(0), MULTIPLE_CHOICE(1), MULTIPLE_SELECT(2), OPEN(3);
+        MULTIPLE_CHOICE(0), TRUE_FALSE(1), MULTIPLE_SELECT(2), OPEN(3);
         private final int value;
         Type(int value){this.value=value;}
         public int getValue(){return this.value;}
@@ -58,4 +58,7 @@ public class Question {
     }
     //TODO: Public getters are needed for the velocity engine
     public String getQuestion() { return this.question; }
+    public Map<Integer, String> getChoice() { return this.choice; }
+    public Type getType() { return this.type; }
+    public int getId() { return this.id; }
 }
