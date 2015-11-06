@@ -82,7 +82,14 @@ public class Database {
     }
     public Question getRandomQuestion(String username) {
         //TODO: Returns a random unanswered question for the user
-        return new Question();
+        String q = "How many fingers am I holding up "+username+"?";
+        HashMap<Integer,String> choices = new HashMap<>();
+        choices.put(1, "12");
+        choices.put(2, "2");
+        choices.put(3, "5");
+        choices.put(4, "0");
+
+        return new Question(1, q, choices, Question.Type.MULTIPLE_CHOICE);
     }
 
     //TODO: Wrap in a user service
