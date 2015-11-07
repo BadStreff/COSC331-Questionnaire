@@ -40,6 +40,7 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Iterator;
 
 public class Database {
     private final String DB_NAME = "Questionnaire.db";
@@ -63,6 +64,14 @@ public class Database {
             System.out.println("Database Detected. Verifying Database Integrity...");
             try {
                 //Temp Testing Goes Here
+                HashMap<Integer,String> choices = new HashMap<>();
+                choices.put(1, "12");
+                choices.put(2, "2");
+                choices.put(3, "5");
+                choices.put(4, "0");
+
+                Question q = new Question(0,"What is love?", choices, Question.Type.MULTIPLE_CHOICE);
+                insertQuestion(q);
             }
             catch(Exception e) {System.err.println(e.getMessage());}
         }
@@ -78,6 +87,13 @@ public class Database {
     }
     public boolean insertQuestion(Question question) {
         //TODO
+        this.executeUpdate("INSERT INTO Questions VALUES ("+question.id+",\"" + question.question +"\"," + question.type.getValue() +");");
+        Iterator it = question.choice.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+            it.remove(); // avoids a ConcurrentModificationException
+            this.executeUpdate("INSERT INTO Choices VALUES ("+ pair.getKey()+ "," + question.id + ",\"" + pair.getValue()+ "\");");
+        }
         return false;
     }
     public Question getRandomQuestion(String username) {
