@@ -72,6 +72,7 @@ public class Database {
 
                 Question q = new Question(0,"What is love?", choices, Question.Type.MULTIPLE_CHOICE);
                 insertQuestion(q);
+                submitAnswer(1,"test");
             }
             catch(Exception e) {System.err.println(e.getMessage());}
         }
@@ -81,13 +82,11 @@ public class Database {
      *  Public Members
      *==============================================*/
     //TODO: Wrap in a question service
-    public boolean submitAnswer(int questionID, int choiceID) {
-        //TODO
-        return false;
+    public boolean submitAnswer(int choiceID, String username) {
+        return this.executeUpdate("INSERT INTO Answers VALUES ("+ choiceID + ",\"" + username + "\");");
     }
     public boolean insertQuestion(Question question) {
-        //TODO
-        this.executeUpdate("INSERT INTO Questions VALUES ("+question.id+",\"" + question.question +"\"," + question.type.getValue() +");");
+        this.executeUpdate("INSERT INTO Questions VALUES ("+question.id+",\"" + question.question + "\"," + question.type.getValue() +");");
         Iterator it = question.choice.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry)it.next();
@@ -202,7 +201,7 @@ public class Database {
                     "choice STRING," +
                     "FOREIGN KEY(qid) REFERENCES Questions);");
             //Answer Table
-            stmt.execute("CREATE TABLE Answers(aid INTEGER PRIMARY KEY, " +
+            stmt.execute("CREATE TABLE Answers("+
                     "cid INTEGER," +
                     "username STRING," +
                     "FOREIGN KEY(username) REFERENCES Users," +
