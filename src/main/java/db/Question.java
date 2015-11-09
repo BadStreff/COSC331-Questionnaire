@@ -56,6 +56,14 @@ public class Question {
         this.choice = choice;
         this.type = type;
     }
+    public Question(String question, String[] choice) {
+        this.id = 0;
+        this.question = question;
+        this.choice = new HashMap<>();
+        for(int i = 0; i < choice.length; i++)
+            this.choice.put(i,  choice[i]);
+        this.type = Type.MULTIPLE_CHOICE;
+    }
     //TODO: Public getters are needed for the velocity engine
     public String getQuestion() { return this.question; }
     public Map<Integer, String> getChoice() { return this.choice; }
