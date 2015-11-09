@@ -36,11 +36,7 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import java.util.Map;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Iterator;
+import java.util.*;
 
 public class Database {
     private final String DB_NAME;
@@ -65,15 +61,6 @@ public class Database {
             System.out.println("Database Detected. Verifying Database Integrity...");
             try {
                 //Temp Testing Goes Here
-                HashMap<Integer,String> choices = new HashMap<>();
-                choices.put(1, "12");
-                choices.put(2, "2");
-                choices.put(3, "5");
-                choices.put(4, "0");
-
-                Question q = new Question(0,"What is love?", choices, Question.Type.MULTIPLE_CHOICE);
-                insertQuestion(q);
-                submitAnswer(1,"test");
             }
             catch(Exception e) {System.err.println(e.getMessage());}
         }
@@ -153,6 +140,27 @@ public class Database {
                 + user.email + "\",\"" + user.password + "\"," + user.type.getValue() + ")"))
             throw new UserAlreadyExistException();
     }
+
+    public List<User> getUsers() {
+        List<User> r = new LinkedList<>();
+        List<HashMap<String, String>> rs;
+        try {
+            rs = this.executeQuery("SELECT * FROM Users");
+        }
+        catch(Exception e) {
+            System.err.println("Error retrieving users");
+            return r;
+        }
+        for(HashMap<String,String> item : rs) {
+            User u = new User(item.get("username"),
+                        item.get("email"),
+                        item.get("password"),
+                        User.Type.values()[(Integer.parseInt(item.get("type")))]);
+            r.add(u);
+        }
+        return r;
+    }
+
 
     /**===============================================
      *  Private Members
