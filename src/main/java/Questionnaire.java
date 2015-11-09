@@ -153,6 +153,5 @@ public class Questionnaire {
         for(String i : paths)
             if(pathInfo.contains(i))
                 r = true;
-        return r;
-    }
+        return r;    }
 }

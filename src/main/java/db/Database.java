@@ -199,7 +199,7 @@ public class Database {
             stmt.execute("CREATE TABLE Choices(cid INTEGER PRIMARY KEY ASC, " +
                     "qid INTEGER," +
                     "choice STRING," +
-                    "FOREIGN KEY(qid) REFERENCES Questions);");
+                    "FOREIGN KEY(qid) REFERENCES Questions(qid));");
             //Answer Table
             stmt.execute("CREATE TABLE Answers("+
                     "cid INTEGER," +
@@ -241,6 +241,7 @@ public class Database {
             connection = DriverManager.getConnection("jdbc:sqlite:" + DB_NAME);
             Statement statement = connection.createStatement();
             statement.setQueryTimeout(10);  // set timeout to 10 sec.
+            statement.execute("PRAGMA FOREIGN_KEYS=1"); //Always follow foreign key restraints
 
             statement.executeUpdate(update);
             return true;
