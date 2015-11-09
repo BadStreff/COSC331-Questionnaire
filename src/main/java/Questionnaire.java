@@ -33,7 +33,7 @@ import db.User;
 public class Questionnaire {
     private static List<String> adminSession = new ArrayList<String>();
     public static void main(String[] args) {
-        Database db = new Database();
+        Database db = new Database("Questionnaire.db");
 
         // Initialize Web Server
         port(4567);

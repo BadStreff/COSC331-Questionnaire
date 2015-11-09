@@ -43,12 +43,13 @@ import java.util.List;
 import java.util.Iterator;
 
 public class Database {
-    private final String DB_NAME = "Questionnaire.db";
+    private final String DB_NAME;
 
     /**===============================================
      *  Constructor / Destructor
      *==============================================*/
-    public Database(){
+    public Database(String db){
+        DB_NAME = db;
         if(!this.exists()) {
             System.err.println("No database detected, creating a new one");
             try {
