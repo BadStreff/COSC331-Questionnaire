@@ -95,6 +95,7 @@ $(document).ready(function(){
         }
     });
 });
+
 /*
 @brand-primary: darken(#428bca, 6.5%); // #337ab7
 @brand-success: #5cb85c;
