@@ -17,7 +17,6 @@ public class User {
         public int getValue() {return value;}
     }
 
-
     final public String userName;
     final public String email;
     final public String password;
@@ -60,6 +59,22 @@ public class User {
             sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
 
         return sb.toString();
+    }
+
+    public String getUsername() {
+        return userName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public Type getType() {
+        return type;
     }
 }
 //Check if the database already exist or not

@@ -47,17 +47,17 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-2">
             <div class="sidebar content-box" style="display: block;">
                 <ul class="nav">
                     <!-- Main menu -->
-                    <li class="current"><a href="index.html"><i class="glyphicon glyphicon-home"></i> Dashboard</a></li>
-                    <li><a href="#"><i class="glyphicon glyphicon-calendar"></i> Users</a></li>
+                    <li><a href="index.html"><i class="glyphicon glyphicon-home"></i> Dashboard</a></li>
+                    <li class="current"><a href="#"><i class="glyphicon glyphicon-user"></i> Users</a></li>
                     <li><a href="#"><i class="glyphicon glyphicon-stats"></i> Questions</a></li>
                 </ul>
             </div>
         </div>
-        <div class="col-md-9">
+        <div class="col-md-10">
             <div class="content-box-large">
                 <div class="panel-heading">
                     <div class="panel-title">Bootstrap dataTables</div>
@@ -74,7 +74,8 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr class="odd gradeX">
+                        <!--
+                        <tr>
                             <td>Trident</td>
                             <td>Internet
                                 Explorer 4.0</td>
@@ -82,7 +83,7 @@
                             <td class="center"> 4</td>
                             <td class="text-right"><button type="button" class="btn btn-primary btn-xs">Reset Password</button></td>
                         </tr>
-                        <tr class="even gradeC">
+                        <tr>
                             <td>Trident</td>
                             <td>Internet
                                 Explorer 5.0</td>
@@ -90,6 +91,17 @@
                             <td class="center">5</td>
                             <td class="text-right"><button type="button" class="btn btn-primary btn-xs">Reset Password</button></td>
                         </tr>
+                        -->
+                        #foreach( $user in $users )
+                            <tr>
+                                <td>$user.username</td>
+                                <td>$user.email</td>
+                                <td>$user.password</td>
+                                <td>$user.type</td>
+                                <td class="text-right"><button type="button" class="btn btn-primary btn-xs">Reset Password</button></td>
+                                <td class="text-right"><button type="button" class="btn btn-danger btn-xs">DELETE</button></td>
+                            </tr>
+                        #end
                         </tbody>
                     </table>
                 </div>
