@@ -11,3 +11,7 @@
 .margin-top-20 { margin-top: 2.0em; }
 .margin-top-25 { margin-top: 2.5em; }
 .margin-top-30 { margin-top: 3.0em; }
+.table {
+    table-layout: fixed;
+    word-wrap: break-word;
+}

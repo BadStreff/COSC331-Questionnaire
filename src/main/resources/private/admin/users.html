@@ -46,7 +46,7 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-md-10 col-md-offset-1">
+        <div class="col-md-12">
             <div class="content-box-large">
                 <div class="panel-heading">
                         <nav>
@@ -66,17 +66,18 @@
                             <th>Password Hash</th>
                             <th>Account Type</th>
                             <th></th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
                         #foreach( $user in $users )
                             <tr id="$user.username">
-                                <td>$user.username</td>
-                                <td>$user.email</td>
-                                <td>$user.password</td>
-                                <td>$user.type</td>
-                                <td class="text-right"><button type="button" id="reset" class="btn btn-primary btn-xs">Reset Password</button></td>
-                                <td class="text-right"><button type="button" id="delete" class="btn btn-danger btn-xs">DELETE</button></td>
+                                <td class="col-md-2">$user.username</td>
+                                <td class="col-md-2">$user.email</td>
+                                <td class="col-md-4">$user.password</td>
+                                <td class="col-md-2">$user.type</td>
+                                <td class="text-right col-md-1"><button type="button" id="reset" class="btn btn-primary btn-xs">Reset Password</button></td>
+                                <td class="text-right col-md-1"><button type="button" id="delete" class="btn btn-danger btn-xs">DELETE</button></td>
                             </tr>
                         #end
                         </tbody>
@@ -102,6 +103,8 @@
     </div>
 </div>
 
+
+<link href="../vendors/datatables/dataTables.bootstrap.css" rel="stylesheet" media="screen">
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://code.jquery.com/jquery.js"></script>

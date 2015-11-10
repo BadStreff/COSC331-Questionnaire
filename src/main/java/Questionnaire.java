@@ -47,7 +47,7 @@ public class Questionnaire {
         before((request, response) -> {
             String path = request.pathInfo();
             System.out.println("Serving " + path + " to " + request.ip());
-
+/*
             //Redirect users that are not logged in to the login page
             if(request.session().attribute("username") == null && !publicPath(path)) {
                 response.redirect("/login");
@@ -61,7 +61,7 @@ public class Questionnaire {
                 if(!adminSession.contains(request.session().id()))
                     halt(403, "<h1>403 Forbidden<h6>");
             }
-
+*/
         });
 
         get("/", (request, response) -> {

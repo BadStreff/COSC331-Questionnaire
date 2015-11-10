@@ -60,7 +60,7 @@ public class Database {
         else {
             System.out.println("Database Detected. Verifying Database Integrity...");
             try {
-                //Temp Testing Goes Here\
+                //Temp Testing Goes Here
             }
             catch(Exception e) {System.err.println(e.getMessage());}
         }
