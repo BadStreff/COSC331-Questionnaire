@@ -60,7 +60,7 @@ public class Database {
         else {
             System.out.println("Database Detected. Verifying Database Integrity...");
             try {
-                //Temp Testing Goes Here
+                //Temp Testing Goes Here\
             }
             catch(Exception e) {System.err.println(e.getMessage());}
         }
@@ -100,8 +100,8 @@ public class Database {
         return this.executeUpdate("DELETE FROM Users WHERE username=\""+ username +"\";");
     }
     public boolean changePassword(String username, String password){
-        //TODO
-        return false;
+        //TODO: Test
+        return this.executeUpdate("UPDATE Users SET password=\"" + User.hashPassword(password, username) + "\" WHERE username=\""+ username +"\";");
     }
     public boolean verifyUserCredentials(String username, String password) {
         try {
