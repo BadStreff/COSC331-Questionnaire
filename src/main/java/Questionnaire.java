@@ -84,6 +84,10 @@ public class Questionnaire {
             Map<String, Object> model = new HashMap<>();
             return new spark.ModelAndView(model, "/private/admin/questions.html");
         }, new VelocityTemplateEngine());
+        post("/admin/delete_user", (request, response) -> {
+            System.out.println("");
+            return db.deleteUser(request.queryParams("username"));
+        });
 
 
         get("/login", (request, response) -> {

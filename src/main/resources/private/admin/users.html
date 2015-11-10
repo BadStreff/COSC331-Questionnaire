@@ -20,7 +20,6 @@
     <div class="container">
         <div class="row">
             <div class="col-md-5">
-                <!-- Logo -->
                 <div class="logo">
                     <h1><a href="#">COSC3318-Questionnaire</a></h1>
                 </div>
@@ -46,30 +45,18 @@
 </div>
 
 <div class="container">
+
     <div class="row">
-        <nav>
-            <ul class="nav nav-tabs">
-                <li role="presentation" class="active"><a href="#">Home</a></li>
-                <li role="presentation"><a href="#">Profile</a></li>
-                <li role="presentation"><a href="#">Messages</a></li>
-            </ul>
-        </nav>
-    </div>
-    <div class="row">
-        <div class="col-md-2">
-            <div class="sidebar content-box" style="display: block;">
-                <ul class="nav">
-                    <!-- Main menu -->
-                    <li><a href="index.html"><i class="glyphicon glyphicon-home"></i> Dashboard</a></li>
-                    <li class="current"><a href="#"><i class="glyphicon glyphicon-user"></i> Users</a></li>
-                    <li><a href="#"><i class="glyphicon glyphicon-stats"></i> Questions</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="col-md-10">
+        <div class="col-md-10 col-md-offset-1">
             <div class="content-box-large">
                 <div class="panel-heading">
-                    <div class="panel-title">Bootstrap dataTables</div>
+                        <nav>
+                            <ul class="nav nav-tabs nav-justified">
+                                <li role="presentation"><a href="#">Home</a></li>
+                                <li role="presentation" class="active"><a href="#">Users</a></li>
+                                <li role="presentation"><a href="#">Questions</a></li>
+                            </ul>
+                        </nav>
                 </div>
                 <div class="panel-body">
                     <table cellpadding="0" cellspacing="0" border="0" class="table table-striped" id="example">
@@ -83,32 +70,14 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <!--
-                        <tr>
-                            <td>Trident</td>
-                            <td>Internet
-                                Explorer 4.0</td>
-                            <td>Win 95+</td>
-                            <td class="center"> 4</td>
-                            <td class="text-right"><button type="button" class="btn btn-primary btn-xs">Reset Password</button></td>
-                        </tr>
-                        <tr>
-                            <td>Trident</td>
-                            <td>Internet
-                                Explorer 5.0</td>
-                            <td>Win 95+</td>
-                            <td class="center">5</td>
-                            <td class="text-right"><button type="button" class="btn btn-primary btn-xs">Reset Password</button></td>
-                        </tr>
-                        -->
                         #foreach( $user in $users )
-                            <tr>
+                            <tr id="$user.username">
                                 <td>$user.username</td>
                                 <td>$user.email</td>
                                 <td>$user.password</td>
                                 <td>$user.type</td>
-                                <td class="text-right"><button type="button" class="btn btn-primary btn-xs">Reset Password</button></td>
-                                <td class="text-right"><button type="button" class="btn btn-danger btn-xs">DELETE</button></td>
+                                <td class="text-right"><button type="button" id="reset" class="btn btn-primary btn-xs">Reset Password</button></td>
+                                <td class="text-right"><button type="button" id="delete" class="btn btn-danger btn-xs">DELETE</button></td>
                             </tr>
                         #end
                         </tbody>
@@ -127,6 +96,7 @@
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="../bootstrap/js/bootstrap.min.js"></script>
 <script src="../js/custom.js"></script>
+<script src="../js/admin/users.js"></script>
 
 
 <script src="../vendors/datatables/js/jquery.dataTables.min.js"></script>
