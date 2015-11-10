@@ -85,10 +85,15 @@ public class Questionnaire {
             return new spark.ModelAndView(model, "/private/admin/questions.html");
         }, new VelocityTemplateEngine());
         post("/admin/delete_user", (request, response) -> {
-            System.out.println("");
             return db.deleteUser(request.queryParams("username"));
         });
-
+        post("/change_password", (request, response) -> {
+            //A user can only change their own password, unless they have an admin session
+            if(request.queryParams("username") == request.session().attribute("username") ||
+                    adminSession.contains(request.session().id()))
+                return db.changePassword(request.queryParams("username"), request.queryParams("password"));
+            return false;
+        });
 
         get("/login", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
