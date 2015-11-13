@@ -69,11 +69,11 @@ public class Database {
                 this.insertQuestion(new Question(21341234, "To be or not to be, or be-ish, or maybe(?) ?", choices, Question.Type.MULTIPLE_CHOICE));
 
                 HashMap<Integer,String> choices2 = new HashMap<>();
-                choices.put(5, "12");
-                choices.put(6, "2");
-                choices.put(7, "5");
-                choices.put(8, "0");
-                this.insertQuestion(new Question(21341235, "What is love?", choices2, Question.Type.MULTIPLE_CHOICE));
+                choices2.put(5, "0");
+                choices2.put(6, "0");
+                choices2.put(7, "0");
+                choices2.put(8, "0");
+                this.insertQuestion(new Question(213422599, "What is love?", choices2, Question.Type.MULTIPLE_CHOICE));
             }
             catch(Exception e) {System.err.println(e.getMessage());}
         }
@@ -87,7 +87,7 @@ public class Database {
         return this.executeUpdate("INSERT INTO Answers VALUES ("+ choiceID + ",\"" + username + "\");");
     }
     public boolean insertQuestion(Question question) {
-        boolean r = this.executeUpdate("INSERT INTO Questions VALUES ("+question.id+",\"" + question.question + "\"," + question.type.getValue() +");");
+        this.executeUpdate("INSERT INTO Questions VALUES ("+question.id+",\"" + question.question + "\"," + question.type.getValue() +");");
         Iterator it = question.choice.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry)it.next();
@@ -97,7 +97,6 @@ public class Database {
         return false;
     }
     public Question getRandomQuestion(String username) {
-        //TODO: Returns a random unanswered question for the user
         //Here lies Q, unused and forgotten
         String QuestionText = "";
         int QuestionID = 0;
@@ -105,14 +104,13 @@ public class Database {
         Question.Type QuestionType = Question.Type.MULTIPLE_CHOICE;
 
         try {
-            List <HashMap< String,String >> qrs = this.executeQuery("SELECT * FROM Questions ORDER BY RANDOM() LIMIT 1;");
+            List <HashMap< String,String >> qrs = this.executeQuery("SELECT * FROM Questions WHERE qid NOT IN (SELECT qid FROM Answers NATURAL JOIN Choices WHERE username=\"" + username + "\") ORDER BY RANDOM() LIMIT 1;");
             QuestionID = Integer.parseInt(qrs.get(0).get("qid"));
             QuestionText = qrs.get(0).get("question");
             QuestionType =  Question.Type.values()[Integer.parseInt(qrs.get(0).get("type"))];
             List <HashMap< String,String >> crs = this.executeQuery("SELECT * FROM Choices WHERE qid = \"" + QuestionID +"\";");
-            for(HashMap<String,String> i: crs) {
+            for(HashMap<String,String> i: crs)
                 Choices.put(Integer.parseInt(i.get("cid")), i.get("choice"));
-            }
         }
 
         catch (Exception E){
