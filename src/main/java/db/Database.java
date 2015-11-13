@@ -50,8 +50,12 @@ public class Database {
             System.err.println("No database detected, creating a new one");
             try {
                 createDatabaseFile(DB_NAME);
+                System.out.println("Creating tables");
                 createTables();
+                System.out.println("Adding admin user");
                 createAdminAccount();
+                System.out.println("Adding standard questions");
+                createStandardQuestions();
             }
             catch (Exception e) {
                 System.err.println(e.getMessage());
@@ -61,19 +65,6 @@ public class Database {
             System.out.println("Database Detected. Verifying Database Integrity...");
             try {
                 //Temp Testing Goes Here
-                HashMap<Integer,String> choices = new HashMap<>();
-                choices.put(1, "12");
-                choices.put(2, "2");
-                choices.put(3, "5");
-                choices.put(4, "0");
-                this.insertQuestion(new Question(21341234, "To be or not to be, or be-ish, or maybe(?) ?", choices, Question.Type.MULTIPLE_CHOICE));
-
-                HashMap<Integer,String> choices2 = new HashMap<>();
-                choices2.put(5, "0");
-                choices2.put(6, "0");
-                choices2.put(7, "0");
-                choices2.put(8, "0");
-                this.insertQuestion(new Question(213422599, "What is love?", choices2, Question.Type.MULTIPLE_CHOICE));
             }
             catch(Exception e) {System.err.println(e.getMessage());}
         }
@@ -258,6 +249,49 @@ public class Database {
         User u = new User("admin", "admin", "admin", User.Type.ADMIN);
         try {insertUser(u);}
         catch(Exception e) {System.err.println("Could not create local admin account");}
+    }
+
+    private void createStandardQuestions() {
+        HashMap<Integer,String> choices = new HashMap<Integer,String>(){{
+            put(1, "12");
+            put(2, "0");
+            put(3, "5");
+            put(4, "2");
+        }};
+        this.insertQuestion(new Question(1, "How many fingers am I holding up?", choices, Question.Type.MULTIPLE_CHOICE));
+
+        HashMap<Integer,String> choices2 = new HashMap<Integer,String>(){{
+            put(5, "0");
+            put(6, "0");
+            put(7, "0");
+            put(8, "0");
+        }};
+        this.insertQuestion(new Question(2, "Which answer is correct?", choices2, Question.Type.MULTIPLE_CHOICE));
+
+        HashMap<Integer,String> choices3 = new HashMap<Integer,String>(){{
+            put(9, "True");
+            put(10, "False");
+        }};
+        this.insertQuestion(new Question(3, "Today is Friday", choices3, Question.Type.MULTIPLE_CHOICE));
+
+        HashMap<Integer,String> choices4 = new HashMap<Integer,String>(){{
+            put(11, "Sunday");
+            put(12, "Monday");
+            put(13, "Tuesday");
+            put(14, "Wednesday");
+            put(15, "Thursday");
+            put(16, "Friday");
+            put(17, "Saturday");
+        }};
+        this.insertQuestion(new Question(4, "What day of the week is it?", choices4, Question.Type.MULTIPLE_CHOICE));
+
+        HashMap<Integer,String> choices5 = new HashMap<Integer,String>(){{
+            put(18, "Nope");
+            put(19, "0");
+            put(20, "0");
+            put(21, "0");
+        }};
+        this.insertQuestion(new Question(5, "To be or not to be?", choices5, Question.Type.MULTIPLE_CHOICE));
     }
 
     private boolean executeUpdate(String update) {
