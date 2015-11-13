@@ -61,6 +61,13 @@ public class Database {
             System.out.println("Database Detected. Verifying Database Integrity...");
             try {
                 //Temp Testing Goes Here
+                HashMap<Integer,String> choices = new HashMap<>();
+                choices.put(1, "12");
+                choices.put(2, "2");
+                choices.put(3, "5");
+                choices.put(4, "0");
+
+                this.insertQuestion(new Question(1, "To be or not to be, or be-ish, or maybe(?) ?", choices, Question.Type.MULTIPLE_CHOICE));
             }
             catch(Exception e) {System.err.println(e.getMessage());}
         }
@@ -85,7 +92,7 @@ public class Database {
     }
     public Question getRandomQuestion(String username) {
         //TODO: Returns a random unanswered question for the user
-        String q = "How many fingers am I holding up "+username+"?";
+       /* String q = "How many fingers am I holding up "+username+"?";
         HashMap<Integer,String> choices = new HashMap<>();
         choices.put(1, "12");
         choices.put(2, "2");
@@ -93,6 +100,27 @@ public class Database {
         choices.put(4, "0");
 
         return new Question(1, q, choices, Question.Type.MULTIPLE_CHOICE);
+        */
+        //Here lies Q, unused and forgotten
+        String QuestionText = "";
+        int QuestionID = 0;
+        HashMap <Integer,String > Choices = new HashMap<>(); //more like Hashbrown
+        Question.Type QuestionType = Question.Type.MULTIPLE_CHOICE;
+
+        try{
+            List <HashMap< String,String >> qrs = this.executeQuery("SELECT * FROM Users ORDER BY RANDOM() LIMIT 1;");
+            QuestionID = Integer.parseInt(qrs.get(0).get("qid"));
+            QuestionText = qrs.get(0).get("question");
+            QuestionType =  Question.Type.values()[Integer.parseInt(qrs.get(0).get("type"))];
+            List <HashMap< String,String >> crs = this.executeQuery("SELECT * FROM Choices WHERE qid = \"" + QuestionID +"\";");
+            for(HashMap<String,String> i: crs) {
+                Choices.put(Integer.parseInt(i.get("cid")), i.get("choice"));
+            }
+        }
+
+        catch (Exception E){
+        }
+        return new Question(QuestionID, QuestionText, Choices, QuestionType);
     }
 
     //TODO: Wrap in a user service
