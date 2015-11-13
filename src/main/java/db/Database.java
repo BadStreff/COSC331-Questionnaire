@@ -66,8 +66,14 @@ public class Database {
                 choices.put(2, "2");
                 choices.put(3, "5");
                 choices.put(4, "0");
+                this.insertQuestion(new Question(21341234, "To be or not to be, or be-ish, or maybe(?) ?", choices, Question.Type.MULTIPLE_CHOICE));
 
-                this.insertQuestion(new Question(1, "To be or not to be, or be-ish, or maybe(?) ?", choices, Question.Type.MULTIPLE_CHOICE));
+                HashMap<Integer,String> choices2 = new HashMap<>();
+                choices.put(5, "12");
+                choices.put(6, "2");
+                choices.put(7, "5");
+                choices.put(8, "0");
+                this.insertQuestion(new Question(21341235, "What is love?", choices2, Question.Type.MULTIPLE_CHOICE));
             }
             catch(Exception e) {System.err.println(e.getMessage());}
         }
@@ -81,7 +87,7 @@ public class Database {
         return this.executeUpdate("INSERT INTO Answers VALUES ("+ choiceID + ",\"" + username + "\");");
     }
     public boolean insertQuestion(Question question) {
-        this.executeUpdate("INSERT INTO Questions VALUES ("+question.id+",\"" + question.question + "\"," + question.type.getValue() +");");
+        boolean r = this.executeUpdate("INSERT INTO Questions VALUES ("+question.id+",\"" + question.question + "\"," + question.type.getValue() +");");
         Iterator it = question.choice.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry)it.next();
@@ -92,23 +98,14 @@ public class Database {
     }
     public Question getRandomQuestion(String username) {
         //TODO: Returns a random unanswered question for the user
-       /* String q = "How many fingers am I holding up "+username+"?";
-        HashMap<Integer,String> choices = new HashMap<>();
-        choices.put(1, "12");
-        choices.put(2, "2");
-        choices.put(3, "5");
-        choices.put(4, "0");
-
-        return new Question(1, q, choices, Question.Type.MULTIPLE_CHOICE);
-        */
         //Here lies Q, unused and forgotten
         String QuestionText = "";
         int QuestionID = 0;
         HashMap <Integer,String > Choices = new HashMap<>(); //more like Hashbrown
         Question.Type QuestionType = Question.Type.MULTIPLE_CHOICE;
 
-        try{
-            List <HashMap< String,String >> qrs = this.executeQuery("SELECT * FROM Users ORDER BY RANDOM() LIMIT 1;");
+        try {
+            List <HashMap< String,String >> qrs = this.executeQuery("SELECT * FROM Questions ORDER BY RANDOM() LIMIT 1;");
             QuestionID = Integer.parseInt(qrs.get(0).get("qid"));
             QuestionText = qrs.get(0).get("question");
             QuestionType =  Question.Type.values()[Integer.parseInt(qrs.get(0).get("type"))];
@@ -119,12 +116,14 @@ public class Database {
         }
 
         catch (Exception E){
+            System.err.println(E.toString());
         }
         return new Question(QuestionID, QuestionText, Choices, QuestionType);
     }
 
     //TODO: Wrap in a user service
     public boolean deleteUser(String username) {
+        //TODO: Make this also delete any answers
         return this.executeUpdate("DELETE FROM Users WHERE username=\""+ username +"\";");
     }
     public boolean changePassword(String username, String password){
