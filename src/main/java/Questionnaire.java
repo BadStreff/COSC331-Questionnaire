@@ -70,6 +70,9 @@ public class Questionnaire {
             model.put("question", db.getRandomQuestion(request.session().attribute("username")));
             return new spark.ModelAndView(model, "/private/index.html");
         }, new VelocityTemplateEngine());
+        post("/submit_answer", (request, response) -> {
+            return db.submitAnswer(Integer.parseInt(request.queryParams("choice_id")), request.session().attribute("username"));
+        });
 
         get("/admin", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
@@ -146,7 +149,6 @@ public class Questionnaire {
             }
             return true;
         });
-
         post("/userexist", (request, response) -> {
             String username = request.queryParams("username");
             System.out.println("Checking username: " + username);
