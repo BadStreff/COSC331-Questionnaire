@@ -54,10 +54,6 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">${question.question}</div>
                     <div class="panel-body">
-                        #if(!${$question})
-                        <p>Looks like you answered all our questions! <br />
-                        Come back alter and we might have some more.</p>
-                        #end
                         <div class="input-group">
                             #foreach ($key in $question.choice.keySet())
                                 <div class="radio">
@@ -70,10 +66,8 @@
                         </div>
                     </div>
                     <div class="panel-footer">
-                        #if(${$question})
                         <button type="button" class="btn btn-success pull-right submit">Submit</button>
                         <div class="clearfix"></div>
-                        #end
                     </div>
                 </div>
             </div>
