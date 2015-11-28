@@ -47,6 +47,7 @@ public class Database {
      *==============================================*/
     public Database(String db){
         DB_NAME = db;
+        StatisticsHandler = new Statistics(this);
         if(!this.exists()) {
             System.err.println("No database detected, creating a new one");
             try {
@@ -66,10 +67,10 @@ public class Database {
             System.out.println("Database Detected. Verifying Database Integrity...");
             try {
                 //Temp Testing Goes Here
+                System.out.println(this.StatisticsHandler.getTotalUsers());
             }
             catch(Exception e) {System.err.println(e.getMessage());}
         }
-        StatisticsHandler = new Statistics(this);
     }
 
     /**===============================================

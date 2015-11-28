@@ -13,13 +13,31 @@ public class Statistics {
     }
 
     public int getTotalUsers() {
-        return 0;
+        try {
+            return Integer.parseInt(database.executeQuery("SELECT COUNT(*) FROM Users").get(0).get("COUNT(*)"));
+        }
+        catch(Exception e) {
+            System.err.println("Statistics.getTotalUsers(): " + e.getMessage());
+            return 0;
+        }
     }
     public int getTotalQuestions() {
-        return 0;
+        try {
+            return Integer.parseInt(database.executeQuery("SELECT COUNT(*) FROM Questions").get(0).get("COUNT(*)"));
+        }
+        catch(Exception e) {
+            System.err.println("Statistics.getTotalQuestions(): " + e.getMessage());
+            return 0;
+        }
     }
     public int getTotalAnswers() {
-        return 0;
+        try {
+            return Integer.parseInt(database.executeQuery("SELECT COUNT(*) FROM Answers").get(0).get("COUNT(*)"));
+        }
+        catch(Exception e) {
+            System.err.println("Statistics.getTotalAnswers(): " + e.getMessage());
+            return 0;
+        }
     }
     public int getTotalUnansweredQuestions() {
         return 0;
