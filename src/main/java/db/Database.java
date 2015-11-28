@@ -40,6 +40,7 @@ import java.util.*;
 
 public class Database {
     private final String DB_NAME;
+    public Statistics StatisticsHandler;
 
     /**===============================================
      *  Constructor / Destructor
@@ -68,6 +69,7 @@ public class Database {
             }
             catch(Exception e) {System.err.println(e.getMessage());}
         }
+        StatisticsHandler = new Statistics(this);
     }
 
     /**===============================================
@@ -294,7 +296,7 @@ public class Database {
         this.insertQuestion(new Question(5, "To be or not to be?", choices5, Question.Type.MULTIPLE_CHOICE));
     }
 
-    private boolean executeUpdate(String update) {
+    protected boolean executeUpdate(String update) {
         try {
             Class.forName("org.sqlite.JDBC");
         }
@@ -331,7 +333,7 @@ public class Database {
             }
         }
     }
-    private List<HashMap<String,String>> executeQuery(String query) throws SQLException {
+    protected List<HashMap<String,String>> executeQuery(String query) throws SQLException {
         Connection connection = null;
         ResultSet rs;
         List<HashMap<String,String>> list = new LinkedList<>();
