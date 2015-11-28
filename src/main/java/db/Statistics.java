@@ -11,4 +11,17 @@ public class Statistics {
     public Statistics(db.Database database) {
         this.database = database;
     }
+
+    public int getTotalUsers() {
+        return 0;
+    }
+    public int getTotalQuestions() {
+        return 0;
+    }
+    public int getTotalAnswers() {
+        return 0;
+    }
+    public int getTotalUnansweredQuestions() {
+        return 0;
+    }
 }
