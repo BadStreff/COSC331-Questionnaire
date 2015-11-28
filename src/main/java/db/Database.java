@@ -81,6 +81,7 @@ public class Database {
         return this.executeUpdate("INSERT INTO Answers VALUES ("+ choiceID + ",\"" + username + "\");");
     }
     public boolean insertQuestion(Question question) {
+        this.serializeQuestion(question);
         this.executeUpdate("INSERT INTO Questions VALUES ("+question.id+",\"" + question.question + "\"," + question.type.getValue() +");");
         Iterator it = question.choice.entrySet().iterator();
         while (it.hasNext()) {
@@ -255,46 +256,31 @@ public class Database {
     }
 
     private void createStandardQuestions() {
-        HashMap<Integer,String> choices = new HashMap<Integer,String>(){{
-            put(1, "12");
-            put(2, "0");
-            put(3, "5");
-            put(4, "2");
-        }};
-        this.insertQuestion(new Question(1, "How many fingers am I holding up?", choices, Question.Type.MULTIPLE_CHOICE));
+        this.insertQuestion(new Question("How many fingers am I holding up?", new String[] {"12", "0", "3", "2"}));
+        this.insertQuestion(new Question("Which answer is correct?", new String[] {"0", "1", "2", "3"}));
+        this.insertQuestion(new Question("Today is Friday", new String[] {"True", "False"}));
+        this.insertQuestion(new Question("What day of the week is it?", new String[] {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"}));
+    }
 
-        HashMap<Integer,String> choices2 = new HashMap<Integer,String>(){{
-            put(5, "0");
-            put(6, "0");
-            put(7, "0");
-            put(8, "0");
-        }};
-        this.insertQuestion(new Question(2, "Which answer is correct?", choices2, Question.Type.MULTIPLE_CHOICE));
+    //Sanitizes question id's so that they are inserted into the db without collision
+    //note that this should only be called on questions that use the lazy constructor
+    void serializeQuestion(Question q) {
+        int maxQuestionId = 0;
+        int maxAnswerId = 0;
 
-        HashMap<Integer,String> choices3 = new HashMap<Integer,String>(){{
-            put(9, "True");
-            put(10, "False");
-        }};
-        this.insertQuestion(new Question(3, "Today is Friday", choices3, Question.Type.MULTIPLE_CHOICE));
+        try {maxAnswerId = Integer.parseInt(this.executeQuery("SELECT MAX(cid) FROM Choices").get(0).get("MAX(cid)"));}
+        catch(Exception e) {System.err.println("Statistics.serializeQuestion(): " + e.getMessage());}
 
-        HashMap<Integer,String> choices4 = new HashMap<Integer,String>(){{
-            put(11, "Sunday");
-            put(12, "Monday");
-            put(13, "Tuesday");
-            put(14, "Wednesday");
-            put(15, "Thursday");
-            put(16, "Friday");
-            put(17, "Saturday");
-        }};
-        this.insertQuestion(new Question(4, "What day of the week is it?", choices4, Question.Type.MULTIPLE_CHOICE));
+        try {maxQuestionId = Integer.parseInt(this.executeQuery("SELECT MAX(qid) FROM Questions").get(0).get("MAX(qid)"));}
+        catch(Exception e) {System.err.println("Statistics.serializeQuestion(): " + e.getMessage());}
 
-        HashMap<Integer,String> choices5 = new HashMap<Integer,String>(){{
-            put(18, "Nope");
-            put(19, "0");
-            put(20, "0");
-            put(21, "0");
-        }};
-        this.insertQuestion(new Question(5, "To be or not to be?", choices5, Question.Type.MULTIPLE_CHOICE));
+        q.id = maxQuestionId+1;
+
+        int num_choices = q.choice.size();
+        Map<Integer,String> choice = new HashMap<>();
+        for(int i = 0; i < num_choices; i++)
+            choice.put(maxAnswerId+i+1,  q.choice.get(i));
+        q.choice = choice;
     }
 
     protected boolean executeUpdate(String update) {

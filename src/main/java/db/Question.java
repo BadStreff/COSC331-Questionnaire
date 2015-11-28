@@ -31,9 +31,9 @@ import java.util.HashMap;
 //TODO: Add support for timestamps
 
 public class Question {
-    final int id;
+    int id;
     final String question;
-    final Map<Integer, String> choice;
+    Map<Integer, String> choice;
     final Type type;
 
     public enum Type {
@@ -49,13 +49,14 @@ public class Question {
         this.choice = new HashMap<>();
         this.type = Type.OPEN;
     }
-
+    //this should only be used when returning a question, not creating one
     public Question(int id, String question, HashMap<Integer,String> choice, Type type) {
         this.id = id;
         this.question = question;
         this.choice = choice;
         this.type = type;
     }
+    //lazy constructor to be used with serializeQuestion()
     public Question(String question, String[] choice) {
         this.id = 0;
         this.question = question;
