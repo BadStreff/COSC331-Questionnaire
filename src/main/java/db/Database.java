@@ -67,7 +67,10 @@ public class Database {
             System.out.println("Database Detected. Verifying Database Integrity...");
             try {
                 //Temp Testing Goes Here
-                System.out.println(this.StatisticsHandler.getTotalUsers());
+                List<Question> q = this.getAllQuestions();
+                for(Question i : q) {
+                    System.out.println(i.getId() + ":" + i.question);
+                }
             }
             catch(Exception e) {System.err.println(e.getMessage());}
         }
@@ -112,6 +115,28 @@ public class Database {
             System.err.println(E.toString());
         }
         return new Question(QuestionID, QuestionText, Choices, QuestionType);
+    }
+    List<Question> getAllQuestions(){
+        List<Question> r = new LinkedList<Question>();
+        try {
+            List<HashMap<String, String>> qrs = this.executeQuery("SELECT * FROM Questions;");
+
+            for(HashMap<String,String> i : qrs) {
+                int QuestionID = Integer.parseInt(i.get("qid"));
+                String QuestionText = i.get("question");
+                Question.Type QuestionType =  Question.Type.values()[Integer.parseInt(i.get("type"))];
+                HashMap<Integer, String> choices = new HashMap<Integer,String>();
+
+                List <HashMap< String,String >> crs = this.executeQuery("SELECT * FROM Choices WHERE qid = \"" + QuestionID +"\";");
+                for(HashMap<String,String> j : crs) {
+                    choices.put(Integer.parseInt(j.get("cid")), j.get("choice"));
+                }
+
+                r.add(new Question(QuestionID, QuestionText, choices, QuestionType));
+            }
+        }
+        catch(Exception e){}
+        return r;
     }
 
     //TODO: Wrap in a user service
