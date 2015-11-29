@@ -67,10 +67,6 @@ public class Database {
             System.out.println("Database Detected. Verifying Database Integrity...");
             try {
                 //Temp Testing Goes Here
-                List<Question> q = this.getAllQuestions();
-                for(Question i : q) {
-                    System.out.println(i.getId() + ":" + i.question);
-                }
             }
             catch(Exception e) {System.err.println(e.getMessage());}
         }
@@ -116,7 +112,7 @@ public class Database {
         }
         return new Question(QuestionID, QuestionText, Choices, QuestionType);
     }
-    List<Question> getAllQuestions(){
+    public List<Question> getAllQuestions(){
         List<Question> r = new LinkedList<Question>();
         try {
             List<HashMap<String, String>> qrs = this.executeQuery("SELECT * FROM Questions;");

@@ -88,6 +88,8 @@ public class Questionnaire {
         }, new VelocityTemplateEngine());
         get("/admin/questions", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
+            model.put("questions", db.getAllQuestions());
+            model.put("StatisticsHandler", db.StatisticsHandler);
             return new spark.ModelAndView(model, "/private/admin/questions.html");
         }, new VelocityTemplateEngine());
         post("/admin/delete_user", (request, response) -> {
