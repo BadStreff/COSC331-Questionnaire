@@ -63,10 +63,15 @@
                                     </label>
                                 </div>
                             #end
+                            #if( $question.question == "" )
+                                Looks like you answered all the questions we have, check back later for more!
+                            #end
                         </div>
                     </div>
                     <div class="panel-footer">
+                        #if( $question.question != "" )
                         <button type="button" class="btn btn-success pull-right submit">Submit</button>
+                        #end
                         <div class="clearfix"></div>
                     </div>
                 </div>
