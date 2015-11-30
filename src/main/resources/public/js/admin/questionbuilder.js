@@ -24,7 +24,7 @@ $(document).ready(function(){
         $.post('/create_question', {'question_text': $("#questionText").val(),
                           'question_choices': r}).done(function(result){
             console.log("Post data sent");
-            console.log(result);
+            window.location.href = '/admin/questions';
          });
     });
 });
