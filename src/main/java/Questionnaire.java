@@ -47,7 +47,7 @@ public class Questionnaire {
         before((request, response) -> {
             String path = request.pathInfo();
             System.out.println("Serving " + path + " to " + request.ip());
-/*
+
             //Redirect users that are not logged in to the login page
             if(request.session().attribute("username") == null && !publicPath(path)) {
                 response.redirect("/login");
@@ -61,7 +61,7 @@ public class Questionnaire {
                 if(!adminSession.contains(request.session().id()))
                     halt(403, "<h1>403 Forbidden<h6>");
             }
-*/
+
         });
 
         get("/", (request, response) -> {
@@ -104,16 +104,16 @@ public class Questionnaire {
         });
         post("/create_question", (request, response) -> {
             //A user can only change their own password, unless they have an admin session
-            //if (request.queryParams("username") == request.session().attribute("username") ||
-            //        adminSession.contains(request.session().id())) {
+            if (request.queryParams("username") == request.session().attribute("username") ||
+                    adminSession.contains(request.session().id())) {
                 System.err.println("/create_question ---- Got question: " + request.queryParams("question_text"));
                 String choices[] = request.queryParams("question_choices").split("###");
                 for(String c : choices)
                     System.out.println(c);
                 Question q = new Question(request.queryParams("question_text"), choices);
                 return db.insertQuestion(q);
-            //}
-            //return false;
+            }
+            return false;
         });
 
         get("/login", (request, response) -> {
