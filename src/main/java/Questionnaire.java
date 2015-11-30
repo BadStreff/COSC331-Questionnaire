@@ -102,6 +102,19 @@ public class Questionnaire {
                 return db.changePassword(request.queryParams("username"), request.queryParams("password"));
             return false;
         });
+        post("/create_question", (request, response) -> {
+            //A user can only change their own password, unless they have an admin session
+            //if (request.queryParams("username") == request.session().attribute("username") ||
+            //        adminSession.contains(request.session().id())) {
+                System.err.println("/create_question ---- Got question: " + request.queryParams("question_text"));
+                String choices[] = request.queryParams("question_choices").split("###");
+                for(String c : choices)
+                    System.out.println(c);
+                Question q = new Question(request.queryParams("question_text"), choices);
+                return db.insertQuestion(q);
+            //}
+            //return false;
+        });
 
         get("/login", (request, response) -> {
             Map<String, Object> model = new HashMap<>();

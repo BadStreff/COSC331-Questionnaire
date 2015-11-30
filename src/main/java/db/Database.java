@@ -88,7 +88,7 @@ public class Database {
             it.remove(); // avoids a ConcurrentModificationException
             this.executeUpdate("INSERT INTO Choices VALUES ("+ pair.getKey()+ "," + question.id + ",\"" + pair.getValue()+ "\");");
         }
-        return false;
+        return true;
     }
     public Question getRandomQuestion(String username) {
         //Here lies Q, unused and forgotten
